@@ -17,3 +17,5 @@ These files define and manage the GATT (Generic Attribute Profile) for our BLE d
    - Read requests (for sensor data)
    - Write requests (for motor control)
    - Notifications (if implementing sensor data push)
+
+   
