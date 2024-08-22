@@ -25,3 +25,8 @@ GATT: Generic Attribute Profile
     - Characteristic: a single data point of value
         - can hold x,y,z value of 3 axis accelerometer for example.
         - also have a predifined UUID 16/128 bit 
+
+
+
+
+
