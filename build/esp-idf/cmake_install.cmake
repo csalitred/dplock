@@ -542,3 +542,58 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/csalitre/School/senior-design/dplock/build/esp-idf/main/cmake_install.cmake")
 endif()
 
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("/home/csalitre/School/senior-design/dplock/build/esp-idf/accelerometer/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("/home/csalitre/School/senior-design/dplock/build/esp-idf/battery/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("/home/csalitre/School/senior-design/dplock/build/esp-idf/ble_server/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("/home/csalitre/School/senior-design/dplock/build/esp-idf/button/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("/home/csalitre/School/senior-design/dplock/build/esp-idf/gatt/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("/home/csalitre/School/senior-design/dplock/build/esp-idf/i2c/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("/home/csalitre/School/senior-design/dplock/build/esp-idf/led/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("/home/csalitre/School/senior-design/dplock/build/esp-idf/nvs/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("/home/csalitre/School/senior-design/dplock/build/esp-idf/photodiode/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("/home/csalitre/School/senior-design/dplock/build/esp-idf/sensor_utils/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("/home/csalitre/School/senior-design/dplock/build/esp-idf/tasks/cmake_install.cmake")
+endif()
+
