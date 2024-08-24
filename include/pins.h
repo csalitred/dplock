@@ -5,20 +5,12 @@
 #include "soc/gpio_num.h"  // library with all the gpio pin numbers
 
 
-// I2C for accelerometer
-#define PIN_NUM_I2C_SDA
-#define PIN_NUM_I2C_SCL
-
-// PWM DC motor
-#define PIN_NUM_PWM
-
-// led gpio
-#define PIN_NUM_LED
-
-// photodiode gpio
-#define PIN_NUM_DIODE
-
-// button gpio
-#define PIN_NUM_BUTTON
+// GPIOS
+#define PIN_NUM_I2C_SDA GPIO_NUM_13
+#define PIN_NUM_I2C_SCL GPIO_NUM_14
+#define PIN_NUM_PWM     GPIO_NUM_1
+#define PIN_NUM_LED     GPIO_NUM_10
+#define PIN_NUM_DIODE   GPIO_NUM_2
+#define PIN_NUM_BUTTON  GPIO_NUM_3
 
 #endif

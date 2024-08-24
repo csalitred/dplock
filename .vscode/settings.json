@@ -17,6 +17,8 @@
         "pins.h": "c",
         "i2c.h": "c",
         "ble_uuid.h": "c",
-        "gatt_svr.h": "c"
+        "gatt_svr.h": "c",
+        "gpio.h": "c",
+        "gpio_num.h": "c"
     }
 }
