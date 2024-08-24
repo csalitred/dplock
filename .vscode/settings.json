@@ -12,5 +12,11 @@
     ],
     "idf.port": "/dev/ttyACM0",
     "idf.pythonBinPath": "/home/csalitre/.espressif/python_env/idf5.3_py3.10_env/bin/python",
-    "idf.toolsPath": "/home/csalitre/.espressif"
+    "idf.toolsPath": "/home/csalitre/.espressif",
+    "files.associations": {
+        "pins.h": "c",
+        "i2c.h": "c",
+        "ble_uuid.h": "c",
+        "gatt_svr.h": "c"
+    }
 }

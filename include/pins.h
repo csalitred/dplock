@@ -1,3 +1,6 @@
+#ifndef PINS_H
+#define PINS_H
+
 #include "driver/gpio.h"
 #include "soc/gpio_num.h"  // library with all the gpio pin numbers
 
@@ -18,3 +21,4 @@
 // button gpio
 #define PIN_NUM_BUTTON
 
+#endif

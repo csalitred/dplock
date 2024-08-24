@@ -1,0 +1,32 @@
+BLE Fundamentals:
+https://www.youtube.com/watch?v=zK_LS9pSXlc&list=PLIhKsUwB2-ex0dxe9E-Qyifk7UdtcgIMA
+
+GAP: Generic Access Profile:
+    - How BLE devices from connections with each other
+    Roles for devices:
+        - Broadcaster: sending avertising events (e.g ble thermometer)
+        - Observer: device that scans for nearby advertising devices. Can only observe data from nearby devices.
+        - Central: can initiate and start connection process, known as master.
+        - Peripheral: device that advertises and once connected with central, cannot make connections with other stations until connection with central is concluded.
+    
+GATT: Generic Attribute Profile 
+    - Data exchange in BLE 
+        - Needs connection to have bidirectional data transfer between two devices.
+        - Need to have gone through the adversement process which is governed by GAP.
+    ATT: Attributes Protocols
+    Roles Heirarchy:
+    - Peripheral: Known as the GATT Server, holds ATT look up data & definitions of services & chararcteristics
+    - GATT Client: sends requests to server to access data, ble devices can act as a server and client at the same time. 
+    - Profile: does not exist on the ble peripheral itself, simply a predefiend collection of services.
+    - Service: a collection of chunks of data called characteristics.
+        - each service has UUID (Universally Unique Identifier)
+        - UUID is a unique label which allows to access a particular service.
+        - UUID can be 16 bit (official)/ 128 bit (custom)
+    - Characteristic: a single data point of value
+        - can hold x,y,z value of 3 axis accelerometer for example.
+        - also have a predifined UUID 16/128 bit 
+
+
+
+
+
