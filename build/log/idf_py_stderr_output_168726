@@ -1,0 +1,120 @@
+CMake Error at /home/csalitre/esp/v5.3/esp-idf/tools/cmake/component.cmake:480 (add_library):
+  Cannot find source file:
+
+    /home/csalitre/School/senior-design/dplock/components/ble_server/ble_server.c
+
+  Tried extensions .c .C .c++ .cc .cpp .cxx .cu .mpp .m .M .mm .ixx .cppm .h
+  .hh .h++ .hm .hpp .hxx .in .txx .f .F .for .f77 .f90 .f95 .f03 .hip .ispc
+Call Stack (most recent call first):
+  components/ble_server/CMakeLists.txt:1 (idf_component_register)
+
+
+CMake Error at /home/csalitre/esp/v5.3/esp-idf/tools/cmake/component.cmake:480 (add_library):
+  Cannot find source file:
+
+    /home/csalitre/School/senior-design/dplock/components/button/src/button.c
+
+  Tried extensions .c .C .c++ .cc .cpp .cxx .cu .mpp .m .M .mm .ixx .cppm .h
+  .hh .h++ .hm .hpp .hxx .in .txx .f .F .for .f77 .f90 .f95 .f03 .hip .ispc
+Call Stack (most recent call first):
+  components/button/CMakeLists.txt:1 (idf_component_register)
+
+
+CMake Error at /home/csalitre/esp/v5.3/esp-idf/tools/cmake/component.cmake:480 (add_library):
+  Cannot find source file:
+
+    /home/csalitre/School/senior-design/dplock/components/data_storage/data_storage.c
+
+  Tried extensions .c .C .c++ .cc .cpp .cxx .cu .mpp .m .M .mm .ixx .cppm .h
+  .hh .h++ .hm .hpp .hxx .in .txx .f .F .for .f77 .f90 .f95 .f03 .hip .ispc
+Call Stack (most recent call first):
+  components/data_storage/CMakeLists.txt:1 (idf_component_register)
+
+
+CMake Error at /home/csalitre/esp/v5.3/esp-idf/tools/cmake/component.cmake:480 (add_library):
+  Cannot find source file:
+
+    /home/csalitre/School/senior-design/dplock/components/gatt/gatt_svr.c
+
+  Tried extensions .c .C .c++ .cc .cpp .cxx .cu .mpp .m .M .mm .ixx .cppm .h
+  .hh .h++ .hm .hpp .hxx .in .txx .f .F .for .f77 .f90 .f95 .f03 .hip .ispc
+Call Stack (most recent call first):
+  components/gatt/CMakeLists.txt:1 (idf_component_register)
+
+
+CMake Error at /home/csalitre/esp/v5.3/esp-idf/tools/cmake/component.cmake:480 (add_library):
+  Cannot find source file:
+
+    /home/csalitre/School/senior-design/dplock/components/i2c/i2c.c
+
+  Tried extensions .c .C .c++ .cc .cpp .cxx .cu .mpp .m .M .mm .ixx .cppm .h
+  .hh .h++ .hm .hpp .hxx .in .txx .f .F .for .f77 .f90 .f95 .f03 .hip .ispc
+Call Stack (most recent call first):
+  components/i2c/CMakeLists.txt:1 (idf_component_register)
+
+
+CMake Error at /home/csalitre/esp/v5.3/esp-idf/tools/cmake/component.cmake:480 (add_library):
+  Cannot find source file:
+
+    /home/csalitre/School/senior-design/dplock/components/led/led.c
+
+  Tried extensions .c .C .c++ .cc .cpp .cxx .cu .mpp .m .M .mm .ixx .cppm .h
+  .hh .h++ .hm .hpp .hxx .in .txx .f .F .for .f77 .f90 .f95 .f03 .hip .ispc
+Call Stack (most recent call first):
+  components/led/CMakeLists.txt:1 (idf_component_register)
+
+
+CMake Error at /home/csalitre/esp/v5.3/esp-idf/tools/cmake/component.cmake:480 (add_library):
+  Cannot find source file:
+
+    /home/csalitre/School/senior-design/dplock/components/photodiode/photodiode.c
+
+  Tried extensions .c .C .c++ .cc .cpp .cxx .cu .mpp .m .M .mm .ixx .cppm .h
+  .hh .h++ .hm .hpp .hxx .in .txx .f .F .for .f77 .f90 .f95 .f03 .hip .ispc
+Call Stack (most recent call first):
+  components/photodiode/CMakeLists.txt:1 (idf_component_register)
+
+
+CMake Error at /home/csalitre/esp/v5.3/esp-idf/tools/cmake/component.cmake:480 (add_library):
+  No SOURCES given to target: __idf_ble_server
+Call Stack (most recent call first):
+  components/ble_server/CMakeLists.txt:1 (idf_component_register)
+
+
+CMake Error at /home/csalitre/esp/v5.3/esp-idf/tools/cmake/component.cmake:480 (add_library):
+  No SOURCES given to target: __idf_button
+Call Stack (most recent call first):
+  components/button/CMakeLists.txt:1 (idf_component_register)
+
+
+CMake Error at /home/csalitre/esp/v5.3/esp-idf/tools/cmake/component.cmake:480 (add_library):
+  No SOURCES given to target: __idf_data_storage
+Call Stack (most recent call first):
+  components/data_storage/CMakeLists.txt:1 (idf_component_register)
+
+
+CMake Error at /home/csalitre/esp/v5.3/esp-idf/tools/cmake/component.cmake:480 (add_library):
+  No SOURCES given to target: __idf_gatt
+Call Stack (most recent call first):
+  components/gatt/CMakeLists.txt:1 (idf_component_register)
+
+
+CMake Error at /home/csalitre/esp/v5.3/esp-idf/tools/cmake/component.cmake:480 (add_library):
+  No SOURCES given to target: __idf_i2c
+Call Stack (most recent call first):
+  components/i2c/CMakeLists.txt:1 (idf_component_register)
+
+
+CMake Error at /home/csalitre/esp/v5.3/esp-idf/tools/cmake/component.cmake:480 (add_library):
+  No SOURCES given to target: __idf_led
+Call Stack (most recent call first):
+  components/led/CMakeLists.txt:1 (idf_component_register)
+
+
+CMake Error at /home/csalitre/esp/v5.3/esp-idf/tools/cmake/component.cmake:480 (add_library):
+  No SOURCES given to target: __idf_photodiode
+Call Stack (most recent call first):
+  components/photodiode/CMakeLists.txt:1 (idf_component_register)
+
+
+CMake Generate step failed.  Build files cannot be regenerated correctly.
