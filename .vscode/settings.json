@@ -14,9 +14,27 @@
     "idf.pythonBinPath": "/home/csalitre/.espressif/python_env/idf5.3_py3.10_env/bin/python",
     "idf.toolsPath": "/home/csalitre/.espressif",
     "files.associations": {
-        "pins.h": "c",
-        "i2c.h": "c",
+        "dplock_pins.h": "c",
+        "dplock_i2c.h": "c",
         "ble_uuid.h": "c",
-        "gatt_svr.h": "c"
-    }
+        "dplock_gatt_svr.h": "c",
+        "gpio.h": "c",
+        "gpio_num.h": "c",
+        "gpio_etm.h": "c",
+        "esp_rom_gpio.h": "c",
+        "gpio_types.h": "c",
+        "dplock_button.h": "c"
+    },
+    "C_Cpp.default.includePath": [
+        "${workspaceFolder}/**",
+        "${config:idf.espIdfPath}/components/**",
+        "${config:idf.espIdfPath}/components/esp32s3/**",
+        "${config:idf.espIdfPath}/components/soc/esp32s3/include"
+    ],
+    "C_Cpp.default.compilerPath": "${config:idf.toolsPath}/tools/xtensa-esp-elf/esp-13.2.0_20240530/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc",
+    "C_Cpp.default.defines": [
+        "ESP_PLATFORM",
+        "CONFIG_IDF_TARGET_ESP32S3"
+    ],
+    "C_Cpp.default.intelliSenseMode": "gcc-x86"
 }

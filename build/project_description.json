@@ -1,7 +1,7 @@
 {
     "version":            "1.1",
     "project_name":       "dplock",
-    "project_version":    "8389db4-dirty",
+    "project_version":    "e8a0473-dirty",
     "project_path":       "/home/csalitre/School/senior-design/dplock",
     "idf_path":           "/home/csalitre/esp/v5.3/esp-idf",
     "build_dir":          "/home/csalitre/School/senior-design/dplock/build",
@@ -25,8 +25,8 @@
         "COMPONENT_KCONFIGS_PROJBUILD" : "/home/csalitre/esp/v5.3/esp-idf/components/bootloader/Kconfig.projbuild;/home/csalitre/esp/v5.3/esp-idf/components/esp_app_format/Kconfig.projbuild;/home/csalitre/esp/v5.3/esp-idf/components/esp_rom/Kconfig.projbuild;/home/csalitre/esp/v5.3/esp-idf/components/esptool_py/Kconfig.projbuild;/home/csalitre/esp/v5.3/esp-idf/components/partition_table/Kconfig.projbuild"
     },
     "common_component_reqs": [ "cxx", "newlib", "freertos", "esp_hw_support", "heap", "log", "soc", "hal", "esp_rom", "esp_common", "esp_system", "xtensa" ],
-    "build_components" : [ "accelerometer", "app_trace", "app_update", "battery", "ble_server", "bootloader", "bootloader_support", "bt", "button", "cmock", "console", "cxx", "driver", "efuse", "esp-tls", "esp_adc", "esp_app_format", "esp_bootloader_format", "esp_coex", "esp_common", "esp_driver_ana_cmpr", "esp_driver_cam", "esp_driver_dac", "esp_driver_gpio", "esp_driver_gptimer", "esp_driver_i2c", "esp_driver_i2s", "esp_driver_isp", "esp_driver_jpeg", "esp_driver_ledc", "esp_driver_mcpwm", "esp_driver_parlio", "esp_driver_pcnt", "esp_driver_ppa", "esp_driver_rmt", "esp_driver_sdio", "esp_driver_sdm", "esp_driver_sdmmc", "esp_driver_sdspi", "esp_driver_spi", "esp_driver_tsens", "esp_driver_uart", "esp_driver_usb_serial_jtag", "esp_eth", "esp_event", "esp_gdbstub", "esp_hid", "esp_http_client", "esp_http_server", "esp_https_ota", "esp_https_server", "esp_hw_support", "esp_lcd", "esp_local_ctrl", "esp_mm", "esp_netif", "esp_netif_stack", "esp_partition", "esp_phy", "esp_pm", "esp_psram", "esp_ringbuf", "esp_rom", "esp_system", "esp_timer", "esp_vfs_console", "esp_wifi", "espcoredump", "esptool_py", "fatfs", "freertos", "gatt", "hal", "heap", "http_parser", "i2c", "idf_test", "ieee802154", "json", "led", "log", "lwip", "main", "mbedtls", "mqtt", "newlib", "nvs", "nvs_flash", "nvs_sec_provider", "openthread", "partition_table", "perfmon", "photodiode", "protobuf-c", "protocomm", "pthread", "sdmmc", "sensor_utils", "soc", "spi_flash", "spiffs", "tasks", "tcp_transport", "touch_element", "ulp", "unity", "usb", "vfs", "wear_levelling", "wifi_provisioning", "wpa_supplicant", "xtensa", "" ],
-    "build_component_paths" : [ "/home/csalitre/School/senior-design/dplock/components/accelerometer", "/home/csalitre/esp/v5.3/esp-idf/components/app_trace", "/home/csalitre/esp/v5.3/esp-idf/components/app_update", "/home/csalitre/School/senior-design/dplock/components/battery", "/home/csalitre/School/senior-design/dplock/components/ble_server", "/home/csalitre/esp/v5.3/esp-idf/components/bootloader", "/home/csalitre/esp/v5.3/esp-idf/components/bootloader_support", "/home/csalitre/esp/v5.3/esp-idf/components/bt", "/home/csalitre/School/senior-design/dplock/components/button", "/home/csalitre/esp/v5.3/esp-idf/components/cmock", "/home/csalitre/esp/v5.3/esp-idf/components/console", "/home/csalitre/esp/v5.3/esp-idf/components/cxx", "/home/csalitre/esp/v5.3/esp-idf/components/driver", "/home/csalitre/esp/v5.3/esp-idf/components/efuse", "/home/csalitre/esp/v5.3/esp-idf/components/esp-tls", "/home/csalitre/esp/v5.3/esp-idf/components/esp_adc", "/home/csalitre/esp/v5.3/esp-idf/components/esp_app_format", "/home/csalitre/esp/v5.3/esp-idf/components/esp_bootloader_format", "/home/csalitre/esp/v5.3/esp-idf/components/esp_coex", "/home/csalitre/esp/v5.3/esp-idf/components/esp_common", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_ana_cmpr", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_cam", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_dac", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_gpio", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_gptimer", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_i2c", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_i2s", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_isp", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_jpeg", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_ledc", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_mcpwm", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_parlio", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_pcnt", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_ppa", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_rmt", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_sdio", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_sdm", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_sdmmc", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_sdspi", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_spi", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_tsens", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_uart", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_usb_serial_jtag", "/home/csalitre/esp/v5.3/esp-idf/components/esp_eth", "/home/csalitre/esp/v5.3/esp-idf/components/esp_event", "/home/csalitre/esp/v5.3/esp-idf/components/esp_gdbstub", "/home/csalitre/esp/v5.3/esp-idf/components/esp_hid", "/home/csalitre/esp/v5.3/esp-idf/components/esp_http_client", "/home/csalitre/esp/v5.3/esp-idf/components/esp_http_server", "/home/csalitre/esp/v5.3/esp-idf/components/esp_https_ota", "/home/csalitre/esp/v5.3/esp-idf/components/esp_https_server", "/home/csalitre/esp/v5.3/esp-idf/components/esp_hw_support", "/home/csalitre/esp/v5.3/esp-idf/components/esp_lcd", "/home/csalitre/esp/v5.3/esp-idf/components/esp_local_ctrl", "/home/csalitre/esp/v5.3/esp-idf/components/esp_mm", "/home/csalitre/esp/v5.3/esp-idf/components/esp_netif", "/home/csalitre/esp/v5.3/esp-idf/components/esp_netif_stack", "/home/csalitre/esp/v5.3/esp-idf/components/esp_partition", "/home/csalitre/esp/v5.3/esp-idf/components/esp_phy", "/home/csalitre/esp/v5.3/esp-idf/components/esp_pm", "/home/csalitre/esp/v5.3/esp-idf/components/esp_psram", "/home/csalitre/esp/v5.3/esp-idf/components/esp_ringbuf", "/home/csalitre/esp/v5.3/esp-idf/components/esp_rom", "/home/csalitre/esp/v5.3/esp-idf/components/esp_system", "/home/csalitre/esp/v5.3/esp-idf/components/esp_timer", "/home/csalitre/esp/v5.3/esp-idf/components/esp_vfs_console", "/home/csalitre/esp/v5.3/esp-idf/components/esp_wifi", "/home/csalitre/esp/v5.3/esp-idf/components/espcoredump", "/home/csalitre/esp/v5.3/esp-idf/components/esptool_py", "/home/csalitre/esp/v5.3/esp-idf/components/fatfs", "/home/csalitre/esp/v5.3/esp-idf/components/freertos", "/home/csalitre/School/senior-design/dplock/components/gatt", "/home/csalitre/esp/v5.3/esp-idf/components/hal", "/home/csalitre/esp/v5.3/esp-idf/components/heap", "/home/csalitre/esp/v5.3/esp-idf/components/http_parser", "/home/csalitre/School/senior-design/dplock/components/i2c", "/home/csalitre/esp/v5.3/esp-idf/components/idf_test", "/home/csalitre/esp/v5.3/esp-idf/components/ieee802154", "/home/csalitre/esp/v5.3/esp-idf/components/json", "/home/csalitre/School/senior-design/dplock/components/led", "/home/csalitre/esp/v5.3/esp-idf/components/log", "/home/csalitre/esp/v5.3/esp-idf/components/lwip", "/home/csalitre/School/senior-design/dplock/main", "/home/csalitre/esp/v5.3/esp-idf/components/mbedtls", "/home/csalitre/esp/v5.3/esp-idf/components/mqtt", "/home/csalitre/esp/v5.3/esp-idf/components/newlib", "/home/csalitre/School/senior-design/dplock/components/nvs", "/home/csalitre/esp/v5.3/esp-idf/components/nvs_flash", "/home/csalitre/esp/v5.3/esp-idf/components/nvs_sec_provider", "/home/csalitre/esp/v5.3/esp-idf/components/openthread", "/home/csalitre/esp/v5.3/esp-idf/components/partition_table", "/home/csalitre/esp/v5.3/esp-idf/components/perfmon", "/home/csalitre/School/senior-design/dplock/components/photodiode", "/home/csalitre/esp/v5.3/esp-idf/components/protobuf-c", "/home/csalitre/esp/v5.3/esp-idf/components/protocomm", "/home/csalitre/esp/v5.3/esp-idf/components/pthread", "/home/csalitre/esp/v5.3/esp-idf/components/sdmmc", "/home/csalitre/School/senior-design/dplock/components/sensor_utils", "/home/csalitre/esp/v5.3/esp-idf/components/soc", "/home/csalitre/esp/v5.3/esp-idf/components/spi_flash", "/home/csalitre/esp/v5.3/esp-idf/components/spiffs", "/home/csalitre/School/senior-design/dplock/components/tasks", "/home/csalitre/esp/v5.3/esp-idf/components/tcp_transport", "/home/csalitre/esp/v5.3/esp-idf/components/touch_element", "/home/csalitre/esp/v5.3/esp-idf/components/ulp", "/home/csalitre/esp/v5.3/esp-idf/components/unity", "/home/csalitre/esp/v5.3/esp-idf/components/usb", "/home/csalitre/esp/v5.3/esp-idf/components/vfs", "/home/csalitre/esp/v5.3/esp-idf/components/wear_levelling", "/home/csalitre/esp/v5.3/esp-idf/components/wifi_provisioning", "/home/csalitre/esp/v5.3/esp-idf/components/wpa_supplicant", "/home/csalitre/esp/v5.3/esp-idf/components/xtensa", "" ],
+    "build_components" : [ "accelerometer", "app_trace", "app_update", "ble_server", "board", "bootloader", "bootloader_support", "bt", "button", "cmock", "console", "cxx", "data_storage", "driver", "efuse", "esp-tls", "esp_adc", "esp_app_format", "esp_bootloader_format", "esp_coex", "esp_common", "esp_driver_ana_cmpr", "esp_driver_cam", "esp_driver_dac", "esp_driver_gpio", "esp_driver_gptimer", "esp_driver_i2c", "esp_driver_i2s", "esp_driver_isp", "esp_driver_jpeg", "esp_driver_ledc", "esp_driver_mcpwm", "esp_driver_parlio", "esp_driver_pcnt", "esp_driver_ppa", "esp_driver_rmt", "esp_driver_sdio", "esp_driver_sdm", "esp_driver_sdmmc", "esp_driver_sdspi", "esp_driver_spi", "esp_driver_tsens", "esp_driver_uart", "esp_driver_usb_serial_jtag", "esp_eth", "esp_event", "esp_gdbstub", "esp_hid", "esp_http_client", "esp_http_server", "esp_https_ota", "esp_https_server", "esp_hw_support", "esp_lcd", "esp_local_ctrl", "esp_mm", "esp_netif", "esp_netif_stack", "esp_partition", "esp_phy", "esp_pm", "esp_psram", "esp_ringbuf", "esp_rom", "esp_system", "esp_timer", "esp_vfs_console", "esp_wifi", "espcoredump", "esptool_py", "fatfs", "freertos", "gatt", "hal", "heap", "http_parser", "i2c", "idf_test", "ieee802154", "json", "led", "log", "lwip", "main", "mbedtls", "mqtt", "newlib", "nvs_flash", "nvs_sec_provider", "openthread", "partition_table", "perfmon", "photodiode", "protobuf-c", "protocomm", "pthread", "sdmmc", "sensor_utils", "soc", "spi_flash", "spiffs", "tasks", "tcp_transport", "touch_element", "ulp", "unity", "usb", "vfs", "wear_levelling", "wifi_provisioning", "wpa_supplicant", "xtensa", "" ],
+    "build_component_paths" : [ "/home/csalitre/School/senior-design/dplock/components/accelerometer", "/home/csalitre/esp/v5.3/esp-idf/components/app_trace", "/home/csalitre/esp/v5.3/esp-idf/components/app_update", "/home/csalitre/School/senior-design/dplock/components/ble_server", "/home/csalitre/School/senior-design/dplock/components/board", "/home/csalitre/esp/v5.3/esp-idf/components/bootloader", "/home/csalitre/esp/v5.3/esp-idf/components/bootloader_support", "/home/csalitre/esp/v5.3/esp-idf/components/bt", "/home/csalitre/School/senior-design/dplock/components/button", "/home/csalitre/esp/v5.3/esp-idf/components/cmock", "/home/csalitre/esp/v5.3/esp-idf/components/console", "/home/csalitre/esp/v5.3/esp-idf/components/cxx", "/home/csalitre/School/senior-design/dplock/components/data_storage", "/home/csalitre/esp/v5.3/esp-idf/components/driver", "/home/csalitre/esp/v5.3/esp-idf/components/efuse", "/home/csalitre/esp/v5.3/esp-idf/components/esp-tls", "/home/csalitre/esp/v5.3/esp-idf/components/esp_adc", "/home/csalitre/esp/v5.3/esp-idf/components/esp_app_format", "/home/csalitre/esp/v5.3/esp-idf/components/esp_bootloader_format", "/home/csalitre/esp/v5.3/esp-idf/components/esp_coex", "/home/csalitre/esp/v5.3/esp-idf/components/esp_common", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_ana_cmpr", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_cam", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_dac", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_gpio", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_gptimer", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_i2c", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_i2s", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_isp", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_jpeg", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_ledc", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_mcpwm", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_parlio", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_pcnt", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_ppa", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_rmt", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_sdio", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_sdm", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_sdmmc", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_sdspi", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_spi", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_tsens", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_uart", "/home/csalitre/esp/v5.3/esp-idf/components/esp_driver_usb_serial_jtag", "/home/csalitre/esp/v5.3/esp-idf/components/esp_eth", "/home/csalitre/esp/v5.3/esp-idf/components/esp_event", "/home/csalitre/esp/v5.3/esp-idf/components/esp_gdbstub", "/home/csalitre/esp/v5.3/esp-idf/components/esp_hid", "/home/csalitre/esp/v5.3/esp-idf/components/esp_http_client", "/home/csalitre/esp/v5.3/esp-idf/components/esp_http_server", "/home/csalitre/esp/v5.3/esp-idf/components/esp_https_ota", "/home/csalitre/esp/v5.3/esp-idf/components/esp_https_server", "/home/csalitre/esp/v5.3/esp-idf/components/esp_hw_support", "/home/csalitre/esp/v5.3/esp-idf/components/esp_lcd", "/home/csalitre/esp/v5.3/esp-idf/components/esp_local_ctrl", "/home/csalitre/esp/v5.3/esp-idf/components/esp_mm", "/home/csalitre/esp/v5.3/esp-idf/components/esp_netif", "/home/csalitre/esp/v5.3/esp-idf/components/esp_netif_stack", "/home/csalitre/esp/v5.3/esp-idf/components/esp_partition", "/home/csalitre/esp/v5.3/esp-idf/components/esp_phy", "/home/csalitre/esp/v5.3/esp-idf/components/esp_pm", "/home/csalitre/esp/v5.3/esp-idf/components/esp_psram", "/home/csalitre/esp/v5.3/esp-idf/components/esp_ringbuf", "/home/csalitre/esp/v5.3/esp-idf/components/esp_rom", "/home/csalitre/esp/v5.3/esp-idf/components/esp_system", "/home/csalitre/esp/v5.3/esp-idf/components/esp_timer", "/home/csalitre/esp/v5.3/esp-idf/components/esp_vfs_console", "/home/csalitre/esp/v5.3/esp-idf/components/esp_wifi", "/home/csalitre/esp/v5.3/esp-idf/components/espcoredump", "/home/csalitre/esp/v5.3/esp-idf/components/esptool_py", "/home/csalitre/esp/v5.3/esp-idf/components/fatfs", "/home/csalitre/esp/v5.3/esp-idf/components/freertos", "/home/csalitre/School/senior-design/dplock/components/gatt", "/home/csalitre/esp/v5.3/esp-idf/components/hal", "/home/csalitre/esp/v5.3/esp-idf/components/heap", "/home/csalitre/esp/v5.3/esp-idf/components/http_parser", "/home/csalitre/School/senior-design/dplock/components/i2c", "/home/csalitre/esp/v5.3/esp-idf/components/idf_test", "/home/csalitre/esp/v5.3/esp-idf/components/ieee802154", "/home/csalitre/esp/v5.3/esp-idf/components/json", "/home/csalitre/School/senior-design/dplock/components/led", "/home/csalitre/esp/v5.3/esp-idf/components/log", "/home/csalitre/esp/v5.3/esp-idf/components/lwip", "/home/csalitre/School/senior-design/dplock/main", "/home/csalitre/esp/v5.3/esp-idf/components/mbedtls", "/home/csalitre/esp/v5.3/esp-idf/components/mqtt", "/home/csalitre/esp/v5.3/esp-idf/components/newlib", "/home/csalitre/esp/v5.3/esp-idf/components/nvs_flash", "/home/csalitre/esp/v5.3/esp-idf/components/nvs_sec_provider", "/home/csalitre/esp/v5.3/esp-idf/components/openthread", "/home/csalitre/esp/v5.3/esp-idf/components/partition_table", "/home/csalitre/esp/v5.3/esp-idf/components/perfmon", "/home/csalitre/School/senior-design/dplock/components/photodiode", "/home/csalitre/esp/v5.3/esp-idf/components/protobuf-c", "/home/csalitre/esp/v5.3/esp-idf/components/protocomm", "/home/csalitre/esp/v5.3/esp-idf/components/pthread", "/home/csalitre/esp/v5.3/esp-idf/components/sdmmc", "/home/csalitre/School/senior-design/dplock/components/sensor_utils", "/home/csalitre/esp/v5.3/esp-idf/components/soc", "/home/csalitre/esp/v5.3/esp-idf/components/spi_flash", "/home/csalitre/esp/v5.3/esp-idf/components/spiffs", "/home/csalitre/School/senior-design/dplock/components/tasks", "/home/csalitre/esp/v5.3/esp-idf/components/tcp_transport", "/home/csalitre/esp/v5.3/esp-idf/components/touch_element", "/home/csalitre/esp/v5.3/esp-idf/components/ulp", "/home/csalitre/esp/v5.3/esp-idf/components/unity", "/home/csalitre/esp/v5.3/esp-idf/components/usb", "/home/csalitre/esp/v5.3/esp-idf/components/vfs", "/home/csalitre/esp/v5.3/esp-idf/components/wear_levelling", "/home/csalitre/esp/v5.3/esp-idf/components/wifi_provisioning", "/home/csalitre/esp/v5.3/esp-idf/components/wpa_supplicant", "/home/csalitre/esp/v5.3/esp-idf/components/xtensa", "" ],
     "build_component_info" : {
         "accelerometer": {
             "alias": "idf::accelerometer",
@@ -40,7 +40,7 @@
             "managed_reqs": [],
             "managed_priv_reqs": [],
             "file": "/home/csalitre/School/senior-design/dplock/build/esp-idf/accelerometer/libaccelerometer.a",
-            "sources": [ "/home/csalitre/School/senior-design/dplock/components/accelerometer/accelerometer.c" ],
+            "sources": [ "/home/csalitre/School/senior-design/dplock/components/accelerometer/dplock_accelerometer.c" ],
             "include_dirs": [ "include" ]
         },
         "app_trace": {
@@ -73,21 +73,6 @@
             "sources": [ "/home/csalitre/esp/v5.3/esp-idf/components/app_update/esp_ota_ops.c", "/home/csalitre/esp/v5.3/esp-idf/components/app_update/esp_ota_app_desc.c" ],
             "include_dirs": [ "include" ]
         },
-        "battery": {
-            "alias": "idf::battery",
-            "target": "___idf_battery",
-            "prefix": "idf",
-            "dir": "/home/csalitre/School/senior-design/dplock/components/battery",
-            "type": "LIBRARY",
-            "lib": "__idf_battery",
-            "reqs": [],
-            "priv_reqs": [],
-            "managed_reqs": [],
-            "managed_priv_reqs": [],
-            "file": "/home/csalitre/School/senior-design/dplock/build/esp-idf/battery/libbattery.a",
-            "sources": [ "/home/csalitre/School/senior-design/dplock/components/battery/battery.c" ],
-            "include_dirs": [ "include" ]
-        },
         "ble_server": {
             "alias": "idf::ble_server",
             "target": "___idf_ble_server",
@@ -100,7 +85,22 @@
             "managed_reqs": [],
             "managed_priv_reqs": [],
             "file": "/home/csalitre/School/senior-design/dplock/build/esp-idf/ble_server/libble_server.a",
-            "sources": [ "/home/csalitre/School/senior-design/dplock/components/ble_server/ble_server.c" ],
+            "sources": [ "/home/csalitre/School/senior-design/dplock/components/ble_server/dplock_ble_svr.c" ],
+            "include_dirs": [ "include" ]
+        },
+        "board": {
+            "alias": "idf::board",
+            "target": "___idf_board",
+            "prefix": "idf",
+            "dir": "/home/csalitre/School/senior-design/dplock/components/board",
+            "type": "CONFIG_ONLY",
+            "lib": "__idf_board",
+            "reqs": [ "esp_driver_gpio" ],
+            "priv_reqs": [],
+            "managed_reqs": [],
+            "managed_priv_reqs": [],
+            "file": "",
+            "sources": [],
             "include_dirs": [ "include" ]
         },
         "bootloader": {
@@ -155,12 +155,12 @@
             "dir": "/home/csalitre/School/senior-design/dplock/components/button",
             "type": "LIBRARY",
             "lib": "__idf_button",
-            "reqs": [],
+            "reqs": [ "board" ],
             "priv_reqs": [],
             "managed_reqs": [],
             "managed_priv_reqs": [],
             "file": "/home/csalitre/School/senior-design/dplock/build/esp-idf/button/libbutton.a",
-            "sources": [ "/home/csalitre/School/senior-design/dplock/components/button/button.c" ],
+            "sources": [ "/home/csalitre/School/senior-design/dplock/components/button/src/dplock_button.c" ],
             "include_dirs": [ "include" ]
         },
         "cmock": {
@@ -207,6 +207,21 @@
             "file": "/home/csalitre/School/senior-design/dplock/build/esp-idf/cxx/libcxx.a",
             "sources": [ "/home/csalitre/esp/v5.3/esp-idf/components/cxx/cxx_exception_stubs.cpp", "/home/csalitre/esp/v5.3/esp-idf/components/cxx/cxx_guards.cpp", "/home/csalitre/esp/v5.3/esp-idf/components/cxx/cxx_init.cpp" ],
             "include_dirs": []
+        },
+        "data_storage": {
+            "alias": "idf::data_storage",
+            "target": "___idf_data_storage",
+            "prefix": "idf",
+            "dir": "/home/csalitre/School/senior-design/dplock/components/data_storage",
+            "type": "LIBRARY",
+            "lib": "__idf_data_storage",
+            "reqs": [],
+            "priv_reqs": [],
+            "managed_reqs": [],
+            "managed_priv_reqs": [],
+            "file": "/home/csalitre/School/senior-design/dplock/build/esp-idf/data_storage/libdata_storage.a",
+            "sources": [ "/home/csalitre/School/senior-design/dplock/components/data_storage/dplock_data_storage.c" ],
+            "include_dirs": [ "include" ]
         },
         "driver": {
             "alias": "idf::driver",
@@ -1105,7 +1120,7 @@
             "managed_reqs": [],
             "managed_priv_reqs": [],
             "file": "/home/csalitre/School/senior-design/dplock/build/esp-idf/gatt/libgatt.a",
-            "sources": [ "/home/csalitre/School/senior-design/dplock/components/gatt/gatt_svr.c" ],
+            "sources": [ "/home/csalitre/School/senior-design/dplock/components/gatt/dplock_gatt_svr.c" ],
             "include_dirs": [ "include" ]
         },
         "hal": {
@@ -1165,7 +1180,7 @@
             "managed_reqs": [],
             "managed_priv_reqs": [],
             "file": "/home/csalitre/School/senior-design/dplock/build/esp-idf/i2c/libi2c.a",
-            "sources": [ "/home/csalitre/School/senior-design/dplock/components/i2c/i2c.c" ],
+            "sources": [ "/home/csalitre/School/senior-design/dplock/components/i2c/dplock_i2c.c" ],
             "include_dirs": [ "include" ]
         },
         "idf_test": {
@@ -1220,12 +1235,12 @@
             "dir": "/home/csalitre/School/senior-design/dplock/components/led",
             "type": "LIBRARY",
             "lib": "__idf_led",
-            "reqs": [],
+            "reqs": [ "board" ],
             "priv_reqs": [],
             "managed_reqs": [],
             "managed_priv_reqs": [],
             "file": "/home/csalitre/School/senior-design/dplock/build/esp-idf/led/libled.a",
-            "sources": [ "/home/csalitre/School/senior-design/dplock/components/led/led.c" ],
+            "sources": [ "/home/csalitre/School/senior-design/dplock/components/led/dplock_led.c" ],
             "include_dirs": [ "include" ]
         },
         "log": {
@@ -1318,21 +1333,6 @@
             "sources": [ "/home/csalitre/esp/v5.3/esp-idf/components/newlib/abort.c", "/home/csalitre/esp/v5.3/esp-idf/components/newlib/assert.c", "/home/csalitre/esp/v5.3/esp-idf/components/newlib/heap.c", "/home/csalitre/esp/v5.3/esp-idf/components/newlib/locks.c", "/home/csalitre/esp/v5.3/esp-idf/components/newlib/poll.c", "/home/csalitre/esp/v5.3/esp-idf/components/newlib/pthread.c", "/home/csalitre/esp/v5.3/esp-idf/components/newlib/random.c", "/home/csalitre/esp/v5.3/esp-idf/components/newlib/getentropy.c", "/home/csalitre/esp/v5.3/esp-idf/components/newlib/reent_init.c", "/home/csalitre/esp/v5.3/esp-idf/components/newlib/newlib_init.c", "/home/csalitre/esp/v5.3/esp-idf/components/newlib/syscalls.c", "/home/csalitre/esp/v5.3/esp-idf/components/newlib/termios.c", "/home/csalitre/esp/v5.3/esp-idf/components/newlib/stdatomic.c", "/home/csalitre/esp/v5.3/esp-idf/components/newlib/time.c", "/home/csalitre/esp/v5.3/esp-idf/components/newlib/sysconf.c", "/home/csalitre/esp/v5.3/esp-idf/components/newlib/realpath.c", "/home/csalitre/esp/v5.3/esp-idf/components/newlib/scandir.c", "/home/csalitre/esp/v5.3/esp-idf/components/newlib/port/esp_time_impl.c" ],
             "include_dirs": [ "platform_include" ]
         },
-        "nvs": {
-            "alias": "idf::nvs",
-            "target": "___idf_nvs",
-            "prefix": "idf",
-            "dir": "/home/csalitre/School/senior-design/dplock/components/nvs",
-            "type": "LIBRARY",
-            "lib": "__idf_nvs",
-            "reqs": [],
-            "priv_reqs": [],
-            "managed_reqs": [],
-            "managed_priv_reqs": [],
-            "file": "/home/csalitre/School/senior-design/dplock/build/esp-idf/nvs/libnvs.a",
-            "sources": [ "/home/csalitre/School/senior-design/dplock/components/nvs/nvs.c" ],
-            "include_dirs": [ "include" ]
-        },
         "nvs_flash": {
             "alias": "idf::nvs_flash",
             "target": "___idf_nvs_flash",
@@ -1415,12 +1415,12 @@
             "dir": "/home/csalitre/School/senior-design/dplock/components/photodiode",
             "type": "LIBRARY",
             "lib": "__idf_photodiode",
-            "reqs": [],
+            "reqs": [ "board" ],
             "priv_reqs": [],
             "managed_reqs": [],
             "managed_priv_reqs": [],
             "file": "/home/csalitre/School/senior-design/dplock/build/esp-idf/photodiode/libphotodiode.a",
-            "sources": [ "/home/csalitre/School/senior-design/dplock/components/photodiode/photodiode.c" ],
+            "sources": [ "/home/csalitre/School/senior-design/dplock/components/photodiode/dplock_photodiode.c" ],
             "include_dirs": [ "include" ]
         },
         "protobuf-c": {
@@ -2958,18 +2958,6 @@
             "managed_priv_reqs": [],
             "include_dirs": [ "include" ]
         },
-        "battery": {
-            "alias": "idf::battery",
-            "target": "___idf_battery",
-            "prefix": "idf",
-            "dir": "/home/csalitre/School/senior-design/dplock/components/battery",
-            "lib": "__idf_battery",
-            "reqs": [],
-            "priv_reqs": [],
-            "managed_reqs": [],
-            "managed_priv_reqs": [],
-            "include_dirs": [ "include" ]
-        },
         "ble_server": {
             "alias": "idf::ble_server",
             "target": "___idf_ble_server",
@@ -2982,12 +2970,36 @@
             "managed_priv_reqs": [],
             "include_dirs": [ "include" ]
         },
+        "board": {
+            "alias": "idf::board",
+            "target": "___idf_board",
+            "prefix": "idf",
+            "dir": "/home/csalitre/School/senior-design/dplock/components/board",
+            "lib": "__idf_board",
+            "reqs": [ "esp_driver_gpio" ],
+            "priv_reqs": [],
+            "managed_reqs": [],
+            "managed_priv_reqs": [],
+            "include_dirs": [ "include" ]
+        },
         "button": {
             "alias": "idf::button",
             "target": "___idf_button",
             "prefix": "idf",
             "dir": "/home/csalitre/School/senior-design/dplock/components/button",
             "lib": "__idf_button",
+            "reqs": [ "board" ],
+            "priv_reqs": [],
+            "managed_reqs": [],
+            "managed_priv_reqs": [],
+            "include_dirs": [ "include" ]
+        },
+        "data_storage": {
+            "alias": "idf::data_storage",
+            "target": "___idf_data_storage",
+            "prefix": "idf",
+            "dir": "/home/csalitre/School/senior-design/dplock/components/data_storage",
+            "lib": "__idf_data_storage",
             "reqs": [],
             "priv_reqs": [],
             "managed_reqs": [],
@@ -3024,19 +3036,7 @@
             "prefix": "idf",
             "dir": "/home/csalitre/School/senior-design/dplock/components/led",
             "lib": "__idf_led",
-            "reqs": [],
-            "priv_reqs": [],
-            "managed_reqs": [],
-            "managed_priv_reqs": [],
-            "include_dirs": [ "include" ]
-        },
-        "nvs": {
-            "alias": "idf::nvs",
-            "target": "___idf_nvs",
-            "prefix": "idf",
-            "dir": "/home/csalitre/School/senior-design/dplock/components/nvs",
-            "lib": "__idf_nvs",
-            "reqs": [],
+            "reqs": [ "board" ],
             "priv_reqs": [],
             "managed_reqs": [],
             "managed_priv_reqs": [],
@@ -3048,7 +3048,7 @@
             "prefix": "idf",
             "dir": "/home/csalitre/School/senior-design/dplock/components/photodiode",
             "lib": "__idf_photodiode",
-            "reqs": [],
+            "reqs": [ "board" ],
             "priv_reqs": [],
             "managed_reqs": [],
             "managed_priv_reqs": [],

@@ -83,13 +83,12 @@
 /home/csalitre/School/senior-design/dplock/build/esp-idf/wifi_provisioning/libwifi_provisioning.a
 /home/csalitre/School/senior-design/dplock/build/esp-idf/main/libmain.a
 /home/csalitre/School/senior-design/dplock/build/esp-idf/accelerometer/libaccelerometer.a
-/home/csalitre/School/senior-design/dplock/build/esp-idf/battery/libbattery.a
 /home/csalitre/School/senior-design/dplock/build/esp-idf/ble_server/libble_server.a
 /home/csalitre/School/senior-design/dplock/build/esp-idf/button/libbutton.a
+/home/csalitre/School/senior-design/dplock/build/esp-idf/data_storage/libdata_storage.a
 /home/csalitre/School/senior-design/dplock/build/esp-idf/gatt/libgatt.a
 /home/csalitre/School/senior-design/dplock/build/esp-idf/i2c/libi2c.a
 /home/csalitre/School/senior-design/dplock/build/esp-idf/led/libled.a
-/home/csalitre/School/senior-design/dplock/build/esp-idf/nvs/libnvs.a
 /home/csalitre/School/senior-design/dplock/build/esp-idf/photodiode/libphotodiode.a
 /home/csalitre/School/senior-design/dplock/build/esp-idf/sensor_utils/libsensor_utils.a
 /home/csalitre/School/senior-design/dplock/build/esp-idf/tasks/libtasks.a
