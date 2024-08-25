@@ -3,6 +3,13 @@
 
 #include "esp_err.h"
 #include <time.h>
+#include <stdbool.h>
+#include <stdint.h>
+
+#define MAX_AUTH_DEVICES 10  // BLE devices
+#define MAX_DATA_POINTS  100
+
+typedef uint8_t bd_addr_t[6];  // 6 bytes for BD_ADDR
 
 typedef struct {
     float x;
@@ -25,6 +32,7 @@ typedef struct {
     int16_t accel_y;
     int16_t accel_z;
 } dplock_breach_event_t;
+
 
 /* 
 * Initialize the data storage system
@@ -56,5 +64,13 @@ esp_err_t dplock_get_breach_event(dplock_breach_event_t *event);
 */ 
 esp_err_t dplock_clear_data(void);
 
+/*
+* Device authorization functions
+*/
+void dplock_add_authorized_device(const bd_addr_t bd_addr);
+bool dplock_is_device_authorized(const bd_addr_t bd_addrr);
+void dplock_start_ble_security(const bd_addr_t bd_addr);
+
+void dplock_remove_authorized_device(const bd_addr_t bd_addr);
 
 #endif
