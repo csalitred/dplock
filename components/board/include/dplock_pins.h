@@ -1,7 +1,6 @@
 #ifndef PINS_H
 #define PINS_H
 
-#include "driver/gpio.h"   // library with gpio funcs
 #include "soc/gpio_num.h"  // library with all the gpio pin numbers
 
 

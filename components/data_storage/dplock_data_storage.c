@@ -6,8 +6,8 @@
 
 static const char *TAG = "DPLOCK";
 
-static authorized_devices[MAX_AUTH_DEVICES][6];  // 6 bytes for BD_ADDR
-static authorized_device_count = 0;
+static uint8_t authorized_devices[MAX_AUTH_DEVICES][6];  // 6 bytes for BD_ADDR
+static uint8_t authorized_device_count = 0;
 
 /*
 * Static arrays for storing data

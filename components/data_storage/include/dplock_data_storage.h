@@ -67,10 +67,10 @@ esp_err_t dplock_clear_data(void);
 /*
 * Device authorization functions
 */
-void dplock_add_authorized_device(const uint8_t *bd_addr);
-void dplock_is_device_authorized(const uint8_t *bd_addrr);
-void dplock_start_ble_security(const uint8_t *bd_addr);
+void dplock_add_authorized_device(const bd_addr_t bd_addr);
+bool dplock_is_device_authorized(const bd_addr_t bd_addrr);
+void dplock_start_ble_security(const bd_addr_t bd_addr);
 
-void dplock_remove_authorized_device(uint8_t *bd_addr);
+void dplock_remove_authorized_device(const bd_addr_t bd_addr);
 
 #endif
