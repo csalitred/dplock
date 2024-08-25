@@ -1,7 +1,7 @@
 {
     "version":            "1.1",
     "project_name":       "dplock",
-    "project_version":    "40d9eaa-dirty",
+    "project_version":    "e8a0473-dirty",
     "project_path":       "/home/csalitre/School/senior-design/dplock",
     "idf_path":           "/home/csalitre/esp/v5.3/esp-idf",
     "build_dir":          "/home/csalitre/School/senior-design/dplock/build",

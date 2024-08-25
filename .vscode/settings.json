@@ -14,16 +14,16 @@
     "idf.pythonBinPath": "/home/csalitre/.espressif/python_env/idf5.3_py3.10_env/bin/python",
     "idf.toolsPath": "/home/csalitre/.espressif",
     "files.associations": {
-        "pins.h": "c",
-        "i2c.h": "c",
+        "dplock_pins.h": "c",
+        "dplock_i2c.h": "c",
         "ble_uuid.h": "c",
-        "gatt_svr.h": "c",
+        "dplock_gatt_svr.h": "c",
         "gpio.h": "c",
         "gpio_num.h": "c",
         "gpio_etm.h": "c",
         "esp_rom_gpio.h": "c",
         "gpio_types.h": "c",
-        "button.h": "c"
+        "dplock_button.h": "c"
     },
     "C_Cpp.default.includePath": [
         "${workspaceFolder}/**",
