@@ -24,7 +24,11 @@
         "esp_rom_gpio.h": "c",
         "gpio_types.h": "c",
         "dplock_button.h": "c",
-        "esp_log.h": "c"
+        "esp_log.h": "c",
+        "esp_err.h": "c",
+        "stdbool.h": "c",
+        "esp_attr.h": "c",
+        "freertos.h": "c"
     },
     "C_Cpp.default.includePath": [
         "${workspaceFolder}/**",
