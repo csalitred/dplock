@@ -27,7 +27,8 @@
         "esp_log.h": "c",
         "esp_err.h": "c",
         "stdbool.h": "c",
-        "esp_attr.h": "c"
+        "esp_attr.h": "c",
+        "freertos.h": "c"
     },
     "C_Cpp.default.includePath": [
         "${workspaceFolder}/**",
