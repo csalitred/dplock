@@ -3,34 +3,26 @@
 #include "driver/gpio.h"
 #include "esp_log.h"
 
-#define DEBOUNCE_TIME_MS  50
-
-static const char *TAG = "DPLOCK_BUTTON";
+/*
+* Need to review FreeRTOS documentation on how to implement Task handling
+* with semaphores and queues
+* https://www.freertos.org/Documentation/02-Kernel/02-Kernel-features/01-Tasks-and-co-routines/00-Tasks-and-co-routines
+*/
 TaskHandle_t button_task_handle = NULL;
-static volatile bool is_button_pressed = false;
 
- static void dplock_button_isr_handler(void *arg);
+static SemaphoreHandle_t buton_semaphore = NULL;
 
-static void dplock_button_task(void *arg) {
-    TickType_t last_change_time = 0;
-
-    while(1) {
-        ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-
-        TickType_t current_time = xTaskGetTickCount();
-        if ((current_time - last_change_time) >= pdMS_TO_TICKS(DEBOUNCE_TIME_MS)) {
-            last_change_time = current_time;
-
-            bool current_state = gpio_get_level(PIN_BUTTON) == 0;
-            if (current_state != is_button_pressed) {
-                is_button_pressed = current_state;
-                ESP_LOGI(TAG, "Button state changed: %s", is_button_pressed ? "PRESSED" : "RELEASED");
-            }
-        }
-    }
+static IRAM_ATTR dplock_button_isr_handler(void *arg) {
+    xSemaphoreGiveFromISR(button_semaphore, NULL);
 }
 
-esp_err_t dplock_button_init(void) {
+static void dplock_button_task(void *pvParameters) {
+    dplock_button_state_t button_state = BUTTON_CLOSED;
+}
+
+void dplock_button_init(void) {
+    // intialize all processes needed
+    
     gpio_config_t io_conf = {};
 
     io_conf.pin_bit_mask = (1ULL << PIN_BUTTON);
@@ -39,35 +31,8 @@ esp_err_t dplock_button_init(void) {
     io_conf.pull_down_en = GPIO_PULLDOWN_DISABLE;
     io_conf.intr_type = GPIO_INTR_ANYEDGE;
     
-    esp_err_t ret = gpio_config(&io_conf);
-    if (ret != ESP_OK) {
-        return ret;
-    }
-
-    ret = gpio_install_isr_service(ESP_INTR_FLAG_IRAM);
-    if (ret != ESP_OK && ret != ESP_ERR_INVALID_STATE) {
-        return ret;
-    }
-
-    return gpio_isr_handler_add(PIN_BUTTON, dplock_button_isr_handler, NULL);
+    gpio_config(&io_conf);
 }
 
-static void IRAM_ATTR dplock_button_isr_handler(void *arg) {
-    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-    vTaskNotifyGiveFromISR(button_task_handle, &xHigherPriorityTaskWoken);
-    portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
-}
-
-esp_err_t dplock_button_start_task(void) {
-    if (button_task_handle == NULL) {
-        BaseType_t result = xTaskCreate(dplock_button_task, "button_task", 2048, NULL, 10, &button_task_handle);
-        if (result != pdPASS) {
-            return ESP_FAIL;
-        }
-    }
-    return ESP_OK;
-}
-
-bool dplock_button_is_pressed(void) {
-    return is_button_pressed;
+static void  dplock_button_start_task(void) {
 }
