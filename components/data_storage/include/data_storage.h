@@ -1,5 +1,5 @@
-#ifndef DPLOCK_DATA_STORAGE_H
-#define DPLOCK_DATA_STORAGE_H
+#ifndef DATA_STORAGE_H
+#define DATA_STORAGE_H
 
 #include "esp_err.h"
 #include <time.h>

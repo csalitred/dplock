@@ -1,5 +1,5 @@
-#ifndef DPLOCK_PINS_H
-#define DPLOCK_PINS_H
+#ifndef BOARD_PINS_H
+#define BOARD_PINS_H
 
 #include "soc/gpio_num.h"  
 

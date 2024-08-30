@@ -1,5 +1,5 @@
-#ifndef DPLOCK_BUTTON_H
-#define DPLOCK_BUTTON_H
+#ifndef BUTTON_H
+#define BUTTON_H
 
 /*
 * Supports NP8S2R202GE model
