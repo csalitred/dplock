@@ -1,24 +1,9 @@
-#include "dplock_pins.h"
-#include "dplock_button.h"
+#include "board_pins.h"
+#include "button.h"
 #include "driver/gpio.h"
 #include "esp_log.h"
 
-/*
-* Need to review FreeRTOS documentation on how to implement Task handling
-* with semaphores and queues
-* https://www.freertos.org/Documentation/02-Kernel/02-Kernel-features/01-Tasks-and-co-routines/00-Tasks-and-co-routines
-*/
-TaskHandle_t button_task_handle = NULL;
 
-static SemaphoreHandle_t buton_semaphore = NULL;
-
-static IRAM_ATTR dplock_button_isr_handler(void *arg) {
-    xSemaphoreGiveFromISR(button_semaphore, NULL);
-}
-
-static void dplock_button_task(void *pvParameters) {
-    dplock_button_state_t button_state = BUTTON_CLOSED;
-}
 
 void dplock_button_init(void) {
     // intialize all processes needed
@@ -34,5 +19,3 @@ void dplock_button_init(void) {
     gpio_config(&io_conf);
 }
 
-static void  dplock_button_start_task(void) {
-}
