@@ -1,1 +1,3 @@
-idf_components(SRC "src/servo_driver.h")
+idf_component_register(SRCS "servo_driver.c"
+                    INCLUDE_DIRS "include"
+                    REQUIRES driver board)

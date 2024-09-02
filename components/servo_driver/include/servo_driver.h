@@ -2,17 +2,16 @@
 #define SERVO_DRIVER_H
 
 #include "driver/ledc.h"
+#include "board_pins.h"
 
-#define SERVO_LEDC_TIMER_BIT  14
-#define SERVO_LEDC_BASE_FREQ  50
+#define LEDC_TIMER          LEDC_TIMER_0
+#define LEDC_MODE           LEDC_LOW_SPEED_MODE
+#define LEDC_CHANNEL        LEDC_CHANNEL_0
+#define LEDC_OUTPUT_IO      PIN_PWM
+#define LEDC_DUTY_RES       LEDC_TIMER_13_BIT // Set duty resolution to 13 bits
+#define LEDC_DUTY           (4096)  // Set duty to 50% (2 ** 13) * 50% = 4096
+#define LEDC_FREQUENCY      (5000)  // 5kHz
 
-typedef struct {
-    gpio_num_t pin;
-    ledc_channel_t channel;
-    ledc_timer_t timer;
-} servo_driver_t;
+void servo_init(void);
 
-esp_err_t servo_init(servo_driver_t* servo, gpio_num_t pin, ledc_channel_t channel, ledc_timer_t timer);
-esp_err_t servo_set_position(servo_driver_t* servo, uint32_t angle);
-
-#endif
+#endif  // SERV_DRIVER_H

@@ -5,9 +5,6 @@
 * Supports NP8S2R202GE model
 */
 
-#include "esp_err.h"
-#include "driver/gpio.h"
-
 typedef enum {
     BUTTON_OPEN = 0,
     BUTTON_CLOSED

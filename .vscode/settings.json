@@ -29,7 +29,10 @@
         "stdbool.h": "c",
         "esp_attr.h": "c",
         "freertos.h": "c",
-        "task.h": "c"
+        "task.h": "c",
+        "ledc.h": "c",
+        "board_pins.h": "c",
+        "servo_driver.h": "c"
     },
     "C_Cpp.default.includePath": [
         "${workspaceFolder}/**",
