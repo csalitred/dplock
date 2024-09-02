@@ -1,4 +1,5 @@
 # ignore all sdkconfig optimized by esp-idf
 # only care about tracking sdk.defaults
 sdkconfig* 
+skdconfig.old*
 build/
