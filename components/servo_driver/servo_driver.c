@@ -9,7 +9,6 @@
 static const char *TAG = "SERVO_DRIVER";
 static mcpwm_cmpr_handle_t comparator = NULL;
 
-
 static inline uint32_t angle_to_compare(int angle) 
 {
     if (angle < 0) {
@@ -52,16 +51,18 @@ void servo_init(void)
     ESP_ERROR_CHECK(mcpwm_comparator_set_compare_value(comparator, angle_to_compare(0)));
 
     ESP_LOGI(TAG, "Set generator action on timer and compare event");
-    ESP_ERROR_CHECK(mcpwm_generator_set_action_on_timer_event(generator,
-                                                              MCPWM_GEN_TIMER_EVENT_ACTION(MCPWM_TIMER_DIRECTION_UP, MCPWM_TIMER_EVENT_EMPTY, MCPWM_GEN_ACTION_HIGH)));
-    ESP_ERROR_CHECK(mcpwm_generator_set_action_on_compare_event(generator,
-                                                                MCPWM_GEN_COMPARE_EVENT_ACTION(MCPWM_TIMER_DIRECTION_UP, comparator, MCPWM_GEN_ACTION_LOW)));
+    ESP_ERROR_CHECK(mcpwm_generator_set_action_on_timer_event(generator, 
+                                                                MCPWM_GEN_TIMER_EVENT_ACTION(MCPWM_TIMER_DIRECTION_UP, 
+                                                                                            MCPWM_TIMER_EVENT_EMPTY, 
+                                                                                            MCPWM_GEN_ACTION_HIGH)));
+    ESP_ERROR_CHECK(mcpwm_generator_set_action_on_compare_event(generator, 
+                                                                MCPWM_GEN_COMPARE_EVENT_ACTION(MCPWM_TIMER_DIRECTION_UP,
+                                                                                                comparator, 
+                                                                                                MCPWM_GEN_ACTION_LOW)));
 
     ESP_LOGI(TAG, "Enable and start timer");
     ESP_ERROR_CHECK(mcpwm_timer_enable(timer));
     ESP_ERROR_CHECK(mcpwm_timer_start_stop(timer, MCPWM_TIMER_START_NO_STOP));
-
-
 }
 
 void servo_rotate(void)
