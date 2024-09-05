@@ -2,7 +2,7 @@
 #define SERVO_DRIVER_H
 
 /*
- * Supports Servo Motor MG90S 
+ * Supports Servo Motor MG90S (Testing)
  * Duty Cycle: 1-2ms
  * Operating Voltage: 4.8V - 6V
  * PWM period: 20ms, Freq: 50Hz
@@ -11,6 +11,9 @@
  * ~1ms = All the way to the left -90 degrees 
  * 
  * https://www.electronicoscaldas.com/datasheet/MG90S_Tower-Pro.pdf
+ * 
+ * Will use HS-5086WP Servo for Actual project
+ * https://www.servocity.com/hs-5086wp-servo/?sku=35086S00
 */
 
 #include "board_pins.h"
