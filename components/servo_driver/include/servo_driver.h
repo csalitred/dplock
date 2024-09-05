@@ -15,8 +15,9 @@
 
 #include "board_pins.h"
 
-#define SERVO_MIN_PULSEWIDTH_US       100 
-#define SERVO_MAX_PULSEWIDTH_US       200
+#define SERVO_MIN_PULSEWIDTH_US       500
+#define SERVO_MID_PULSEWIDTH_US       1500
+#define SERVO_MAX_PULSEWIDTH_US       2500
 #define SERVO_MIN_DEGREE              -90
 #define SERVO_MAX_DEGREE              90
 
