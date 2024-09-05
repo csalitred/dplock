@@ -2,12 +2,15 @@
 #include "dplock_i2c.h"
 #include "esp_console.h"
 #include "esp_log.h"
+#include "driver/i2c_maser.h"
 
 #define I2C_PORT_NUM_0  I2C_NUM_0
 
-static const char* TAG = "I2C";
+static const char* TAG = "cmd_tools";
 
-i2c_master_bus_handle_t bus_handle;
+#define I2C_TOOL_TIMEOUT_VALUE_MS (50)
+static uint32_t i2c_frequency = 100 * 1000;
+i2c_master_bus_handle_t tool_bus_handle;
 
 void i2c_bus_init(void)
 {
@@ -37,6 +40,11 @@ static struct {
     struct arg_int *sda;
     struct arg_end *end;
 } i2c_cconfig_args;
+
+static int do_i2cconfig_cmd(int argc, char **argv)
+{
+    int nerrors = arg_parse(argc, argv, (void **)&&i2cconfig_args);
+}
 
 static void register_i2cdetect(void)
 {
