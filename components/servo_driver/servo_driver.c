@@ -1,8 +1,10 @@
 #include "servo_driver.h"
 #include "driver/mcpwm_prelude.h"
 #include "esp_log.h"
-#include "esp_timer.h"
+#include "esp_rom_sys.h"
 #include "esp_err.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 
 static const char *TAG = "SERVO_DRIVER";
 static mcpwm_cmpr_handle_t comparator = NULL;
@@ -10,7 +12,11 @@ static mcpwm_cmpr_handle_t comparator = NULL;
 
 static inline uint32_t angle_to_compare(int angle) 
 {
-    return (angle - SERVO_MIN_DEGREE) * (SERVO_MAX_PULSEWIDTH_US - SERVO_MIN_PULSEWIDTH_US) / (SERVO_MAX_DEGREE - SERVO_MIN_DEGREE) + SERVO_MIN_PULSEWIDTH_US;
+    if (angle < 0) {
+        return SERVO_MID_PULSEWIDTH_US - ((SERVO_MID_PULSEWIDTH_US - SERVO_MIN_PULSEWIDTH_US) * abs(angle) / 90);
+    } else {
+        return SERVO_MID_PULSEWIDTH_US + ((SERVO_MAX_PULSEWIDTH_US - SERVO_MID_PULSEWIDTH_US) * angle / 90);
+    }
 }
 
 void servo_init(void)
@@ -20,6 +26,7 @@ void servo_init(void)
     mcpwm_timer_config_t timer_config = {};
     timer_config.group_id = 0;
     timer_config.clk_src = MCPWM_TIMER_CLK_SRC_DEFAULT;
+    timer_config.resolution_hz = SERVO_TIMEBASE_RESOLUTION_HZ;
     timer_config.period_ticks = SERVO_TIMEBASE_PERIOD;
     timer_config.count_mode = MCPWM_TIMER_COUNT_MODE_UP;
     ESP_ERROR_CHECK(mcpwm_new_timer(&timer_config, &timer));
@@ -40,6 +47,8 @@ void servo_init(void)
     mcpwm_gen_handle_t generator = NULL;
     mcpwm_generator_config_t generator_config = {};
     generator_config.gen_gpio_num = SERVO_PULSE_GPIO;
+    ESP_ERROR_CHECK(mcpwm_new_generator(oper, &generator_config, &generator));
+
     ESP_ERROR_CHECK(mcpwm_comparator_set_compare_value(comparator, angle_to_compare(0)));
 
     ESP_LOGI(TAG, "Set generator action on timer and compare event");
@@ -54,18 +63,21 @@ void servo_init(void)
 
 
 }
+
 void servo_rotate(void)
 {
     int angle = 0;
-    int step = 2;
+    int step = 90;
 
     while(1) {
         ESP_LOGI(TAG, "Angle of rotation: %d", angle);
         ESP_ERROR_CHECK(mcpwm_comparator_set_compare_value(comparator, angle_to_compare(angle)));
-        esp_timer_delay_us(2000);
-        if ((angle + step) > 60 || (angle + step) < -60) {
+        vTaskDelay(pdMS_TO_TICKS(500));
+        if ((angle + step) > 90 || (angle + step) < -90) {
             step *= -1;
         }
         angle += step;
     }
 }
+
+
