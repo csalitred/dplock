@@ -3,6 +3,6 @@
 
 void app_main(void)
 {
-    servo_init();
-    servo_rotate();
+    // servo_init();
+    // servo_rotate();
 }
