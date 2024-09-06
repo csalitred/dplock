@@ -1,8 +1,8 @@
 #include <stdio.h>
-#include "servo_driver.h"
+// #include "servo_driver.h"
+#include "photodiode.h"
 
 void app_main(void)
 {
-    // servo_init();
-    // servo_rotate();
+    adc_read();
 }

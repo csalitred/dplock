@@ -2,7 +2,7 @@
 #include "dplock_i2c.h"
 #include "esp_console.h"
 #include "esp_log.h"
-#include "driver/i2c_maser.h"
+#include "driver/i2c_master.h"
 
 #define I2C_PORT_NUM_0  I2C_NUM_0
 
