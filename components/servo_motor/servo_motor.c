@@ -1,4 +1,4 @@
-#include "servo_driver.h"
+#include "servo_motor.h"
 #include "driver/mcpwm_prelude.h"
 #include "esp_log.h"
 #include "esp_rom_sys.h"
@@ -6,7 +6,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
-static const char *TAG = "SERVO_DRIVER";
+static const char *TAG = "SERVO_MOTOR";
 static mcpwm_cmpr_handle_t comparator = NULL;
 
 static inline uint32_t angle_to_compare(int angle) 
