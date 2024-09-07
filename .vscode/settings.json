@@ -32,11 +32,13 @@
         "task.h": "c",
         "ledc.h": "c",
         "board_pins.h": "c",
-        "servo_driver.h": "c",
+        "servo_motor.h": "c",
         "i2c_master.h": "c",
         "i2c_types.h": "c",
         "stdint.h": "c",
-        "adc_cali.h": "c"
+        "adc_cali.h": "c",
+        "esp_console.h": "c",
+        "argtable3.h": "c"
     },
     "C_Cpp.default.includePath": [
         "${workspaceFolder}/**",
