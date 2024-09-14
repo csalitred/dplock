@@ -5,11 +5,11 @@
 * Supports NP8S2R202GE model
 */
 
-typedef enum {
-    BUTTON_OPEN = 0,
-    BUTTON_CLOSED
-} dplock_button_state_t;
 
-void dplock_button_init(void);
+#include "stdbool.h"
+
+void button_init(void);
+bool button_is_pressed(void);
+void button_clear_press(void);
 
 #endif
