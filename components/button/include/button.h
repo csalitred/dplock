@@ -5,6 +5,7 @@
 * Supports NP8S2R202GE model
 */
 
+
 #include "stdbool.h"
 
 void button_init(void);
