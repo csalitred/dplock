@@ -4,7 +4,7 @@
 #include "driver/i2c_master.h"
 #include "stdlib.h"
 
-#define PORT_NUMBER    -1 // auto-selecting
+#define PORT_NUMBER    -1  // auto-selecting
 #define I2C_TIMEOUT_MS 1000
 #define DATA_LENGTH     100  // arbitrary number for testing
 
@@ -31,6 +31,7 @@ void i2c_manager_init(void)
 
     ESP_LOGI(TAG, "I2C manager initialized successfully");
 }
+
 /*
 void i2c_manager_read(uint8_t device_address, uint8_t reg_address, uint8_t *data, size_t len)
 {
