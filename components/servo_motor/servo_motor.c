@@ -71,10 +71,10 @@ void servo_rotate(void)
        // ESP_LOGE(TAG, "Invalid angle: %d. Angle should be between %d and %d degrees.", angle, SERVO_MIN_DEGREE, SERVO_MAX_DEGREE); 
         return;
     }
-    while (angle < SERVO_MAX_DEGREE) {
+    while (angle < 5) {
         ESP_LOGI(TAG, "Rotating servo to angle: %d degress", angle);
         ESP_ERROR_CHECK(mcpwm_comparator_set_compare_value(comparator, angle_to_compare(angle)));
-
+        vTaskDelay(pdMS_TO_TICKS(20));
         angle += step;
     }
 }

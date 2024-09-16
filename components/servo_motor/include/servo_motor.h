@@ -16,8 +16,8 @@
 #define SERVO_MIN_PULSEWIDTH_US       500
 #define SERVO_MID_PULSEWIDTH_US       750
 #define SERVO_MAX_PULSEWIDTH_US       2250
-#define SERVO_MIN_DEGREE              0.0f
-#define SERVO_MAX_DEGREE              155.0f
+#define SERVO_MIN_DEGREE              0
+#define SERVO_MAX_DEGREE              155
 
 #define SERVO_PULSE_GPIO              PIN_PWM 
 #define SERVO_TIMEBASE_RESOLUTION_HZ  1000000   // 1MHz, 1us per tick
