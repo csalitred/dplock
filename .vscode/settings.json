@@ -39,7 +39,8 @@
         "adc_cali.h": "c",
         "esp_console.h": "c",
         "argtable3.h": "c",
-        "esp_intr_alloc.h": "c"
+        "esp_intr_alloc.h": "c",
+        "adc_oneshot.h": "c"
     },
     "C_Cpp.default.includePath": [
         "${workspaceFolder}/**",

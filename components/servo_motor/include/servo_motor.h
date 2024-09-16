@@ -2,15 +2,10 @@
 #define SERVO_DRIVER_H
 
 /*
- * Supports Servo Motor MG90S (Testing)
- * Duty Cycle: 1-2ms
+ * Supports Servo Motor HS-5086WP (Testing)
+ * Duty Cycle: 750 - 2250
  * Operating Voltage: 4.8V - 6V
  * PWM period: 20ms, Freq: 50Hz
- * 1.5ms = Middle 0 degrees
- * ~2ms = All the way to the right 90 degrees
- * ~1ms = All the way to the left -90 degrees 
- * 
- * https://www.electronicoscaldas.com/datasheet/MG90S_Tower-Pro.pdf
  * 
  * Will use HS-5086WP Servo for Actual project
  * https://www.servocity.com/hs-5086wp-servo/?sku=35086S00
@@ -19,10 +14,10 @@
 #include "board_pins.h"
 
 #define SERVO_MIN_PULSEWIDTH_US       500
-#define SERVO_MID_PULSEWIDTH_US       1500
-#define SERVO_MAX_PULSEWIDTH_US       2500
-#define SERVO_MIN_DEGREE              -90
-#define SERVO_MAX_DEGREE              90
+#define SERVO_MID_PULSEWIDTH_US       750
+#define SERVO_MAX_PULSEWIDTH_US       2250
+#define SERVO_MIN_DEGREE              0
+#define SERVO_MAX_DEGREE              155
 
 #define SERVO_PULSE_GPIO              PIN_PWM 
 #define SERVO_TIMEBASE_RESOLUTION_HZ  1000000   // 1MHz, 1us per tick
@@ -30,5 +25,6 @@
 
 void servo_init(void);
 void servo_rotate(void);
+void servo_reset(void);
 
 #endif
