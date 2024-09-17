@@ -1,2 +1,2 @@
-idf_component_register(SRCS "ble_config.c"
+idf_component_register(SRCS "rtc.c"
                     INCLUDE_DIRS "include")

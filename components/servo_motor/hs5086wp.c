@@ -1,4 +1,4 @@
-#include "servo_motor.h"
+#include "hs5086wp.h"
 #include "driver/mcpwm_prelude.h"
 #include "esp_log.h"
 #include "esp_rom_sys.h"
@@ -45,7 +45,7 @@ void servo_init(void)
     generator_config.gen_gpio_num = SERVO_PULSE_GPIO;
     ESP_ERROR_CHECK(mcpwm_new_generator(oper, &generator_config, &generator));
 
-    ESP_ERROR_CHECK(mcpwm_comparator_set_compare_value(comparator, angle_to_compare(SERVO_MIN_DEGREE)));
+    ESP_ERROR_CHECK(mcpwm_comparator_set_compare_value(comparator, angle_to_compare(SERVO_MAX_DEGREE)));
 
     ESP_LOGI(TAG, "Set generator action on timer and compare event");
     ESP_ERROR_CHECK(mcpwm_generator_set_action_on_timer_event(generator, 
@@ -65,13 +65,29 @@ void servo_init(void)
 
 void servo_rotate(void)
 {
-    int step = 1;
-    int angle = SERVO_MIN_DEGREE;
+    int step = 5;
+    int angle = SERVO_MAX_DEGREE;
     if (angle > SERVO_MAX_DEGREE || angle < SERVO_MIN_DEGREE) {
        // ESP_LOGE(TAG, "Invalid angle: %d. Angle should be between %d and %d degrees.", angle, SERVO_MIN_DEGREE, SERVO_MAX_DEGREE); 
         return;
     }
-    while (angle < 5) {
+    while (angle >= SERVO_MIN_DEGREE) {
+        ESP_LOGI(TAG, "Rotating servo to angle: %d degress", angle);
+        ESP_ERROR_CHECK(mcpwm_comparator_set_compare_value(comparator, angle_to_compare(angle)));
+        vTaskDelay(pdMS_TO_TICKS(20));
+        angle -= step;
+    }
+}
+
+void servo_reset(void)
+{
+    int step = 5;
+    int angle = SERVO_MIN_DEGREE;
+    while (angle <= SERVO_MAX_DEGREE) {
+        if (angle > SERVO_MAX_DEGREE || angle < SERVO_MIN_DEGREE) {
+       // ESP_LOGE(TAG, "Invalid angle: %d. Angle should be between %d and %d degrees.", angle, SERVO_MIN_DEGREE, SERVO_MAX_DEGREE); 
+        return;
+        }
         ESP_LOGI(TAG, "Rotating servo to angle: %d degress", angle);
         ESP_ERROR_CHECK(mcpwm_comparator_set_compare_value(comparator, angle_to_compare(angle)));
         vTaskDelay(pdMS_TO_TICKS(20));
@@ -79,20 +95,11 @@ void servo_rotate(void)
     }
 }
 
-void servo_reset(void)
+void servo_unlock(void)
 {
-    int step = 1;
-    int angle = SERVO_MAX_DEGREE;
-    while (angle >= SERVO_MIN_DEGREE) {
-        if (angle > SERVO_MAX_DEGREE || angle < SERVO_MIN_DEGREE) {
-       // ESP_LOGE(TAG, "Invalid angle: %d. Angle should be between %d and %d degrees.", angle, SERVO_MIN_DEGREE, SERVO_MAX_DEGREE); 
-        return;
-        }
-        ESP_LOGI(TAG, "Rotating servo to angle: %d degress", angle);
-        ESP_ERROR_CHECK(mcpwm_comparator_set_compare_value(comparator, angle_to_compare(angle)));
-
-        angle -= step;
-    }
+    servo_rotate();
+    vTaskDelay(pdMS_TO_TICKS(5000));
+    servo_reset();
 }
 
 
