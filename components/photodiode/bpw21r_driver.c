@@ -18,7 +18,6 @@ static adc_oneshot_unit_handle_t adc_handle;
 static bool do_calibration_chan = false;
 static adc_cali_handle_t adc_cali_chan_handle = NULL;
 
-
 static bool adc_calibration_init(adc_unit_t unit, adc_channel_t channel, adc_atten_t atten, adc_cali_handle_t *out_handle)
 {
     adc_cali_handle_t handle = NULL;
