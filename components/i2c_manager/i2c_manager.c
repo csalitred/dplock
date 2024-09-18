@@ -2,6 +2,7 @@
 #include "i2c_manager.h"
 #include "esp_log.h"
 #include "driver/i2c_master.h"
+#include "driver/gpio.h"
 
 /*
 * 0011101b (address for LISDS12) here for reference but will be utilized in components/lisds12 
@@ -22,6 +23,7 @@ void i2c_master_init(void)
     i2c_mst_config.scl_io_num = PIN_I2C_SCL;
     i2c_mst_config.sda_io_num = PIN_I2C_SDA;
     i2c_mst_config.glitch_ignore_cnt = 7;
+    i2c_mst_config.flags.enable_internal_pullup = true;  // false: when testing on PCB.
     ESP_ERROR_CHECK(i2c_new_master_bus(&i2c_mst_config, &bus_handle));
     // ESP_ERROR_CHECK(i2c_master_probe(bus_handle, 0x22, -1));
     ESP_LOGI(TAG, "I2C manager initialized successfully");
@@ -44,9 +46,4 @@ void i2c_master_read_accel(int16_t *x, int16_t *y, int16_t *z, uint8_t reg_addr)
     *x = (int16_t)((data[1] << 8 | data[0]));  // MSB | LSB
     *y = (int16_t)((data[1] << 8 | data[0]));
     *z = (int16_t)((data[1] << 8 | data[0]));
-}
-
-void i2c_device_uninstall(void)
-{
-    ESP_ERROR_CHECK(i2c_master_bus_rm_device(dev_handle));
 }
