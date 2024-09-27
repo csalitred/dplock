@@ -43,7 +43,11 @@
         "adc_oneshot.h": "c",
         "esp_intr_types.h": "c",
         "bleprph.h": "c",
-        "modlog.h": "c"
+        "modlog.h": "c",
+        "ble_svc_gap.h": "c",
+        "led_driver.h": "c",
+        "nimble_port_freertos.h": "c",
+        "nimble_port.h": "c"
     },
     "C_Cpp.default.includePath": [
         "${workspaceFolder}/**",

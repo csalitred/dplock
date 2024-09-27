@@ -1,10 +1,10 @@
-#include "ble_device.h"
+#include "ble_manager.h"
 #include "esp_log.h"
 
-static const char *TAG = "BLE_DEVICE"
+static const char *TAG = "BLE_DEVICE";
 
 static uint8_t ble_addr_type;
-static uint8_t characteristic_value = 0;
+// static uint8_t characteristic_value = 0;
 
 void ble_init(void) 
 {
