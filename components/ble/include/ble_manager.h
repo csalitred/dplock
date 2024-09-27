@@ -1,4 +1,7 @@
-#include "esp_nimble.h"
+#ifndef BLE_MANAGER_H
+#define BLE_MANAGER_H
+
+#include "esp_nimble_hci.h"
 #include "nimble/nimble_port.h"
 #include "nimble/nimble_port_freertos.h"
 #include "host/ble_hs.h"

@@ -15,7 +15,7 @@
 /*********************************
 * Photodiode
 **********************************/
-#define PIN_ADC     GPIO_NUM_8
+#define PIN_ADC       GPIO_NUM_8
 
 /*********************************
 * USB
@@ -34,9 +34,10 @@
 #define PIN_BUTTON    GPIO_NUM_13
 
 /**********************************
-* LED - Need to connect to GPIO, As of now it's being fed 3v3 from mcu.
+* LED RGB 
 ***********************************/
-// #define PIN_RGB    GPIO_NUM_        
-
+#define PIN_LED_RED   GPIO_NUM_2        
+#define PIN_LED_GREEN GPIO_NUM_4
+#define PIN_LED_BLUE  GPIO_NUM_5
 #endif
 
