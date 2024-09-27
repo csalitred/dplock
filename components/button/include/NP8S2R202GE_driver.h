@@ -7,6 +7,7 @@
 #include "stdbool.h"
 
 void button_init(void);
-void button_state(void);
+bool is_button_released(void);
+bool get_button_state(void);
 
 #endif
