@@ -9,6 +9,8 @@
 #include "esp_netif_sntp.h"
 #include "esp_log.h"
 #include "accelerometer_driver.h"
+#include "ble_manager.h"
+#include "nvs_flash.h"
 
 static const char* TAG = "MAIN";
 
@@ -89,9 +91,9 @@ state_t run_breached_state(inputs_t* inputs)
     return BREACH; // This line will never be reached
 }
 
-void app_main(void)
+void accelerometer_scan(void)
 {
-    esp_err_t ret;
+        esp_err_t ret;
 
     // Initialize I2C
     ret = i2c_master_init();
@@ -139,4 +141,26 @@ void app_main(void)
 
         vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
     }
+}
+
+void app_main(void)
+{
+    esp_err_t ret;
+
+    // Initialize NVS
+    ret = nvs_flash_init();
+    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+        ESP_ERROR_CHECK(nvs_flash_erase());
+        ret = nvs_flash_init();
+    }
+    ESP_ERROR_CHECK(ret);
+
+    // Initialize BLE
+    ble_init();
+    ESP_LOGI(TAG, "BLE initialized");
+
+    // Start BLE advertising
+    ble_advertise();
+    ESP_LOGI(TAG, "BLE advertising started");
+
 }

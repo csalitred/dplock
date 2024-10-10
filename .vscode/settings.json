@@ -48,7 +48,9 @@
         "np8s2r202ge_driver.h": "c",
         "hs5086wp.h": "c",
         "esp_sntp.h": "c",
-        "accelerometer_driver.h": "c"
+        "accelerometer_driver.h": "c",
+        "ble_svc_gatt.h": "c",
+        "nvs.h": "c"
     },
     "C_Cpp.default.includePath": [
         "${workspaceFolder}/**",
