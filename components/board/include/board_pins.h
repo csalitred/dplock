@@ -40,4 +40,3 @@
 #define PIN_LED_GREEN GPIO_NUM_4
 #define PIN_LED_BLUE  GPIO_NUM_5
 #endif
-

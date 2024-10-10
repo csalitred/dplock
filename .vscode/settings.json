@@ -14,10 +14,7 @@
     "idf.pythonBinPath": "/home/csalitre/.espressif/python_env/idf5.3_py3.10_env/bin/python",
     "idf.toolsPath": "/home/csalitre/.espressif",
     "files.associations": {
-        "dplock_pins.h": "c",
-        "dplock_i2c.h": "c",
         "ble_uuid.h": "c",
-        "dplock_gatt_svr.h": "c",
         "gpio.h": "c",
         "gpio_num.h": "c",
         "gpio_etm.h": "c",
@@ -49,7 +46,11 @@
         "nimble_port_freertos.h": "c",
         "nimble_port.h": "c",
         "np8s2r202ge_driver.h": "c",
-        "hs5086wp.h": "c"
+        "hs5086wp.h": "c",
+        "esp_sntp.h": "c",
+        "accelerometer_driver.h": "c",
+        "ble_svc_gatt.h": "c",
+        "nvs.h": "c"
     },
     "C_Cpp.default.includePath": [
         "${workspaceFolder}/**",
