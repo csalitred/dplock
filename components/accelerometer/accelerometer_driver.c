@@ -5,19 +5,19 @@
 #include "freertos/task.h"
 #include <math.h>
 
-#define MMA8451_ADDR 0x1D
-#define MMA8451_WHO_AM_I 0x0D
-#define MMA8451_CTRL_REG1 0x2A
-#define MMA8451_CTRL_REG2 0x2B
-#define MMA8451_OUT_X_MSB 0x01
-#define MMA8451_OUT_Y_MSB 0x03
-#define MMA8451_OUT_Z_MSB 0x05
-
 static const char *TAG = "ACCELEROMETER_DRIVER";
 
 esp_err_t accelerometer_init(void)
 {
     esp_err_t ret;
+
+    // Initialize I2C
+    ret = i2c_master_init();
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to initialize I2C: %s", esp_err_to_name(ret));
+        return ret;
+    }
+    ESP_LOGI(TAG, "I2C initialized successfully");
 
     // Add MMA8451 device to I2C bus
     ret = i2c_add_device(MMA8451_ADDR);
@@ -73,50 +73,28 @@ esp_err_t accelerometer_init(void)
     return ESP_OK;
 }
 
-esp_err_t accelerometer_read(int16_t *x, int16_t *y, int16_t *z)
+esp_err_t accelerometer_read_data(accel_data_t *data)
 {
-    uint8_t data[6];
-
-    esp_err_t ret = i2c_master_read_reg(MMA8451_ADDR, MMA8451_OUT_X_MSB, data, 6);
+    uint8_t raw_data[6];
+    esp_err_t ret = i2c_master_read_reg(MMA8451_ADDR, MMA8451_OUT_X_MSB, raw_data, 6);
     if (ret != ESP_OK) {
         ESP_LOGE(TAG, "Failed to read accelerometer data");
         return ret;
     }
 
-    *x = (int16_t)((data[0] << 8) | data[1]) >> 2;
-    *y = (int16_t)((data[2] << 8) | data[3]) >> 2;
-    *z = (int16_t)((data[4] << 8) | data[5]) >> 2;
+    data->accel_x = (int16_t)((raw_data[0] << 8) | raw_data[1]) >> 2;
+    data->accel_y = (int16_t)((raw_data[2] << 8) | raw_data[3]) >> 2;
+    data->accel_z = (int16_t)((raw_data[4] << 8) | raw_data[5]) >> 2;
 
-    return ESP_OK;
-}
+    float x_g = (float)data->accel_x / SENSITIVITY_2G;
+    float y_g = (float)data->accel_y / SENSITIVITY_2G;
+    float z_g = (float)data->accel_z / SENSITIVITY_2G;
 
-esp_err_t accelerometer_detect_tilt(float *tilt_angle)
-{
-    int16_t x, y, z;
-    esp_err_t ret = accelerometer_read(&x, &y, &z);
-    if (ret != ESP_OK) {
-        return ret;
-    }
+    data->tilt_angle = atan2(sqrt(data->accel_x*data->accel_x + data->accel_y*data->accel_y), data->accel_z) * 180.0 / M_PI;
 
-    // Calculate tilt angle
-    *tilt_angle = atan2(sqrt(x*x + y*y), z) * 180.0 / M_PI;
-
-    return ESP_OK;
-}
-
-esp_err_t accelerometer_detect_drop(bool *drop_detected)
-{
-    int16_t x, y, z;
-    esp_err_t ret = accelerometer_read(&x, &y, &z);
-    if (ret != ESP_OK) {
-        return ret;
-    }
-
-    // Calculate total acceleration
-    float total_accel = sqrt(x*x + y*y + z*z);
-
-    // Detect drop if total acceleration is close to 0 (free fall)
-    *drop_detected = (total_accel < 100); // Adjust threshold as needed
+    float total_accel_g = sqrt(x_g*x_g + y_g*y_g + z_g*z_g);
+    
+    data->is_dropped = (total_accel_g < FREE_FALL_THRESHOLD); 
 
     return ESP_OK;
 }
