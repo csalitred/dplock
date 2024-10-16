@@ -9,7 +9,6 @@
 #define PIN_I2C_SDA   GPIO_NUM_47    
 #define PIN_I2C_SCL   GPIO_NUM_46  
 #define PIN_I2C_SA0   GPIO_NUM_38  // Address Config
-#define PIN_I2C_RST   GPIO_NUM_13
 #define PIN_I2C_INT1  GPIO_NUM_9   // Interrupt Line
 
 /*********************************
