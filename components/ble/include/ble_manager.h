@@ -7,6 +7,7 @@
 #include "host/ble_hs.h"
 #include "services/gap/ble_svc_gap.h"
 #include "services/gatt/ble_svc_gatt.h"
+#include "stdbool.h"
 
 /*
 OUTPUT:
@@ -40,5 +41,8 @@ void ble_advertise(void);
 int ble_gap_event(struct ble_gap_event *event, void *arg);
 void ble_app_on_sync(void);
 void host_task(void *param);
+bool is_ble_connected(void);
+esp_err_t update_historical_data(uint8_t *data, size_t len);
+esp_err_t update_sensor_metadata(uint8_t *data, size_t len);
 
 #endif 

@@ -20,11 +20,12 @@ static const char* TAG = "MAIN";
 typedef enum {IDLE, AUTHORIZED_ACCESS, DROP, BREACH, NUM_STATES} state_t;
 
 typedef struct {
-    bool is_button_released;
     bool is_light_detected;
     bool is_ble_connection;
     int led_position;
+    bool request_access;
     accel_data_t accel_data;
+    button_input_t button_state;
 } inputs_t;
 
 extern volatile bool interrupt_occurred;
@@ -72,6 +73,21 @@ void app_main(void)
             ESP_LOGE(TAG, "Failed to read accelerometer data: %s", esp_err_to_name(ret));
         } 
 
+        button_read(&inputs.button_state);
+        if (inputs.button_state.state_changed) {
+            if (inputs.button_state.is_door_opened) {
+                ESP_LOGI(TAG, "Door was opened!");
+            } else {
+                ESP_LOGI(TAG, "Door has been closed");
+            }
+        }
+
+        if (is_ble_connected()) {
+            ESP_LOGI(TAG, "BLE is connected");
+        } else {
+            ESP_LOGI(TAG, "BLE is not connected");
+        }
+
         switch(current_state) {
             case IDLE:
                 next_state = run_idle_state(&inputs);
@@ -98,8 +114,9 @@ void init(void)
 {
     button_init();
     servo_init();
+    ble_init();
 
-    ESP_LOGI(TAG, "Initialization complete");
+    ESP_LOGI(TAG, "Peripheral initialization complete");
 }
 
 state_t run_idle_state(inputs_t* inputs)
@@ -108,11 +125,15 @@ state_t run_idle_state(inputs_t* inputs)
     ESP_LOGI(TAG, "In IDLE state");
 
     if (inputs->is_ble_connection) {
+        // wait on request from mobile app : request_access = true;
         return AUTHORIZED_ACCESS;
     }
-    if (inputs->accel_data.is_dropped || inputs->accel_data.tilt_angle) {
+    if (inputs->accel_data.is_dropped || inputs->accel_data.tilt_angle >= 45.0) {
         return DROP;
     }
+    // if (inputs.is_button_released && !inputs->is_ble_connection && is_light_detected) {
+    //      return BREACH;  
+    // }
     return IDLE;
 }
 
@@ -121,25 +142,35 @@ state_t run_authorized_access_state(inputs_t* inputs)
     ESP_LOGI(TAG, "Entering AUTHORIZED_ACCESS state");
     // LOG DATA FOR AUTHORIZED ACCESS IN FLASH MEMORY HERE: TIME STAMP
     // stay here until no longer BLE connection established
-    if (!inputs->is_ble_connection) {
-        return IDLE;
+    if (inputs->button_state.is_door_opened) {
+        ESP_LOGI(TAG, "DOOR IS OPEN");
+        // LOG EVENT ???
+    }
+    // if (!inputs->is_ble_connection) {
+    //    return IDLE;
+    //}
+    if (inputs->request_access) {
+        servo_unlock();
+        inputs->request_access = false;
     }
     return AUTHORIZED_ACCESS;
 }
 
 state_t run_dropped_state(inputs_t* inputs)
 {
-    ESP_LOGI(TAG, "Entering DROP state");\
+    // ESP_LOGI(TAG, "Entering DROP state");
      // Log timestamp and data of event in flash memory
+    if (inputs->accel_data.is_dropped) {
+    ESP_LOGI(TAG, "CONTAINER IMPACTED!");
+    }
+    if(inputs->accel_data.tilt_angle >= 45) {
+        ESP_LOGI(TAG, "CONTAINER DROPPED!");
+    }
     return IDLE;
 }
 
 state_t run_breached_state(inputs_t* inputs)
 {
-    ESP_LOGI(TAG, "Entering BREACH state");
-    while(1) {
-         // Log timestamp and stay here forever
-        vTaskDelay(pdMS_TO_TICKS(60000)); // Log every minute
-    }
+    ESP_LOGI(TAG, "CONTAINER BREACH!!!!");
     return BREACH; // This line will never be reached
 }

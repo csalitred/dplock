@@ -6,8 +6,12 @@
 */
 #include "stdbool.h"
 
+typedef struct {
+    bool is_door_opened;
+    bool state_changed;
+} button_input_t;
+
 void button_init(void);
-bool is_button_released(void);
-bool get_button_state(void);
+void button_read(button_input_t *data);
 
 #endif
