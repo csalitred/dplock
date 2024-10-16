@@ -22,6 +22,8 @@ static bool ble_connected = false;
 static uint8_t historical_data[100];
 static uint8_t sensor_control[1];
 static uint8_t sensor_metadata[20];
+static uint16_t historical_data_attr_handle = 0;
+static uint16_t sensor_metadata_attr_handle = 0;
 
 // GATT server callbacks
 static int gatt_svr_chr_access_historical_data(uint16_t conn_handle, uint16_t attr_handle,
@@ -41,6 +43,7 @@ static const struct ble_gatt_svc_def gatt_svr_svcs[] = {
                 .uuid = &gatt_svr_chr_historical_sensor_data_uuid.u,
                 .access_cb = gatt_svr_chr_access_historical_data,
                 .flags = BLE_GATT_CHR_F_READ | BLE_GATT_CHR_F_NOTIFY,
+                .val_handle = &historical_data_attr_handle,
             },
             {
                 .uuid = &gatt_svr_chr_sensor_control_uuid.u,
@@ -51,6 +54,7 @@ static const struct ble_gatt_svc_def gatt_svr_svcs[] = {
                 .uuid = &gatt_svr_chr_sensor_metadata_uuid.u,
                 .access_cb = gatt_svr_chr_access_sensor_metadata,
                 .flags = BLE_GATT_CHR_F_READ,
+                .val_handle = &sensor_metadata_attr_handle,
             },
             {
                 0, // No more characteristics in this service
@@ -191,4 +195,37 @@ void host_task(void *param)
     ESP_LOGI(TAG, "BLE Host Task Started");
     nimble_port_run();
     nimble_port_freertos_deinit();
+}
+
+bool is_ble_connected(void)
+{
+    return ble_connected;
+}
+
+esp_err_t update_historical_data(uint8_t *data, size_t len)
+{
+    if (len > sizeof(historical_data)) {
+        len = sizeof(historical_data);
+    }
+    memcpy(historical_data, data, len);
+    
+    if (historical_data_attr_handle != 0) {
+        ble_gatts_chr_updated(historical_data_attr_handle);
+        return ESP_OK;
+    }
+    return ESP_FAIL;
+}
+
+esp_err_t update_sensor_metadata(uint8_t *data, size_t len)
+{
+    if (len > sizeof(sensor_metadata)) {
+        len = sizeof(sensor_metadata);
+    }
+    memcpy(sensor_metadata, data, len);
+    
+    if (sensor_metadata_attr_handle != 0) {
+        ble_gatts_chr_updated(sensor_metadata_attr_handle);
+        return ESP_OK;
+    }
+    return ESP_FAIL;
 }
