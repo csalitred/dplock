@@ -14,7 +14,7 @@
 
 #define TILT_THRESHOLD 45.0f
 #define SENSITIVITY_2G 4096 // LSB/g for +- 2g range
-#define FREE_FALL_THRESHOLD 0.3f  // g-forces
+#define IMPACT_THRESHOLD 3.0f  // g-forces
 
 typedef struct {
     int16_t accel_x;

@@ -90,11 +90,14 @@ esp_err_t accelerometer_read_data(accel_data_t *data)
     float y_g = (float)data->accel_y / SENSITIVITY_2G;
     float z_g = (float)data->accel_z / SENSITIVITY_2G;
 
-    data->tilt_angle = atan2(sqrt(data->accel_x*data->accel_x + data->accel_y*data->accel_y), data->accel_z) * 180.0 / M_PI;
-
     float total_accel_g = sqrt(x_g*x_g + y_g*y_g + z_g*z_g);
+    data->is_dropped = (total_accel_g >= IMPACT_THRESHOLD);
+    data->tilt_angle = atan2(sqrt(data->accel_x*data->accel_x + data->accel_y*data->accel_y), data->accel_z) * 180.0 / M_PI;
     
-    data->is_dropped = (total_accel_g < FREE_FALL_THRESHOLD); 
+    // TODO: DROP DETECTION FIX!!!
+    if (data->is_dropped) {
+        ESP_LOGI(TAG, "Impact detected! Total acceleration: %.2f g", total_accel_g);
+    } 
 
     return ESP_OK;
 }
