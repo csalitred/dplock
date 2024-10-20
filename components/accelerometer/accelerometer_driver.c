@@ -4,6 +4,8 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include <math.h>
+#include "board_pins.h"
+#include "driver/gpio.h"
 
 static const char *TAG = "ACCELEROMETER_DRIVER";
 
@@ -101,3 +103,4 @@ esp_err_t accelerometer_read_data(accel_data_t *data)
 
     return ESP_OK;
 }
+
