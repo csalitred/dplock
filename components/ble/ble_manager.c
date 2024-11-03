@@ -7,6 +7,9 @@
 #include "host/ble_hs.h"
 #include "services/gap/ble_svc_gap.h"
 #include "services/gatt/ble_svc_gatt.h"
+#include "nvs_manager.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 
 static const char *TAG = "BLE_MANAGER";
 
@@ -19,21 +22,78 @@ static uint8_t ble_addr_type;
 static bool ble_connected = false;
 
 // Define buffers for characteristic data
-static uint8_t historical_data[100];
+static uint8_t historical_data[512];  // Buffer for manifest data
 static uint8_t sensor_control[1];
-static uint8_t sensor_metadata[20];
+static uint8_t sensor_metadata[128];
 static uint16_t historical_data_attr_handle = 0;
 static uint16_t sensor_metadata_attr_handle = 0;
 
+extern volatile bool door_unlock;  // Defined in main.c to control door lock
+
 // GATT server callbacks
 static int gatt_svr_chr_access_historical_data(uint16_t conn_handle, uint16_t attr_handle,
-                                               struct ble_gatt_access_ctxt *ctxt, void *arg);
-static int gatt_svr_chr_access_sensor_control(uint16_t conn_handle, uint16_t attr_handle,
-                                              struct ble_gatt_access_ctxt *ctxt, void *arg);
-static int gatt_svr_chr_access_sensor_metadata(uint16_t conn_handle, uint16_t attr_handle,
-                                               struct ble_gatt_access_ctxt *ctxt, void *arg);
+                                               struct ble_gatt_access_ctxt *ctxt, void *arg) {
+    int rc;
+    switch (ctxt->op) {
+        case BLE_GATT_ACCESS_OP_READ_CHR: {
+            // Get events from NVS
+            event_record_t events[MAX_EVENTS];
+            uint32_t count;
+            esp_err_t ret = nvs_manager_get_all_events(events, &count);
+            if (ret == ESP_OK) {
+                // Calculate total size needed
+                size_t manifest_size = sizeof(uint32_t) + (count * sizeof(event_record_t));
+                if (manifest_size <= sizeof(historical_data)) {
+                    // Pack the data
+                    memcpy(historical_data, &count, sizeof(uint32_t));
+                    memcpy(historical_data + sizeof(uint32_t), events, count * sizeof(event_record_t));
+                    
+                    rc = os_mbuf_append(ctxt->om, historical_data, manifest_size);
+                    return rc == 0 ? 0 : BLE_ATT_ERR_INSUFFICIENT_RES;
+                }
+            }
+            return BLE_ATT_ERR_UNLIKELY;
+        }
+        default:
+            return BLE_ATT_ERR_UNLIKELY;
+    }
+}
 
-// GATT server definition
+static int gatt_svr_chr_access_sensor_control(uint16_t conn_handle, uint16_t attr_handle,
+                                              struct ble_gatt_access_ctxt *ctxt, void *arg) {
+    int rc;
+    switch (ctxt->op) {
+        case BLE_GATT_ACCESS_OP_WRITE_CHR:
+            rc = ble_hs_mbuf_to_flat(ctxt->om, sensor_control, sizeof(sensor_control), NULL);
+            if (rc == 0) {
+                if (sensor_control[0] == 0x01) {  // Unlock command
+                    door_unlock = true;
+                    ESP_LOGI(TAG, "Door unlock command received");
+                }
+            }
+            return rc == 0 ? 0 : BLE_ATT_ERR_INSUFFICIENT_RES;
+        default:
+            return BLE_ATT_ERR_UNLIKELY;
+    }
+}
+
+static int gatt_svr_chr_access_sensor_metadata(uint16_t conn_handle, uint16_t attr_handle,
+                                               struct ble_gatt_access_ctxt *ctxt, void *arg) {
+    int rc;
+    switch (ctxt->op) {
+        case BLE_GATT_ACCESS_OP_READ_CHR: {
+            trip_info_t trip_info;
+            if (nvs_manager_get_trip_info(&trip_info) == ESP_OK) {
+                rc = os_mbuf_append(ctxt->om, &trip_info, sizeof(trip_info_t));
+                return rc == 0 ? 0 : BLE_ATT_ERR_INSUFFICIENT_RES;
+            }
+            return BLE_ATT_ERR_UNLIKELY;
+        }
+        default:
+            return BLE_ATT_ERR_UNLIKELY;
+    }
+}
+
 static const struct ble_gatt_svc_def gatt_svr_svcs[] = {
     {
         .type = BLE_GATT_SVC_TYPE_PRIMARY,
@@ -57,56 +117,53 @@ static const struct ble_gatt_svc_def gatt_svr_svcs[] = {
                 .val_handle = &sensor_metadata_attr_handle,
             },
             {
-                0, // No more characteristics in this service
+                0,
             }
         },
     },
     {
-        0, // No more services
+        0,
     },
 };
 
-static int gatt_svr_chr_access_historical_data(uint16_t conn_handle, uint16_t attr_handle,
-                                               struct ble_gatt_access_ctxt *ctxt, void *arg) {
-    int rc;
-    switch (ctxt->op) {
-        case BLE_GATT_ACCESS_OP_READ_CHR:
-            rc = os_mbuf_append(ctxt->om, historical_data, sizeof(historical_data));
-            return rc == 0 ? 0 : BLE_ATT_ERR_INSUFFICIENT_RES;
-        default:
-            return BLE_ATT_ERR_UNLIKELY;
+esp_err_t update_historical_data(uint8_t *data, size_t len)
+{
+    if (len > sizeof(historical_data)) {
+        len = sizeof(historical_data);
     }
+    memcpy(historical_data, data, len);
+    
+    if (historical_data_attr_handle != 0) {
+        struct os_mbuf *om = ble_hs_mbuf_from_flat(data, len);
+        if (om) {
+            ble_gatts_notify_custom(0, historical_data_attr_handle, om);
+            return ESP_OK;
+        }
+    }
+    return ESP_FAIL;
 }
 
-static int gatt_svr_chr_access_sensor_control(uint16_t conn_handle, uint16_t attr_handle,
-                                              struct ble_gatt_access_ctxt *ctxt, void *arg) {
-    int rc;
-    switch (ctxt->op) {
-        case BLE_GATT_ACCESS_OP_WRITE_CHR:
-            rc = ble_hs_mbuf_to_flat(ctxt->om, sensor_control, sizeof(sensor_control), NULL);
-            return rc == 0 ? 0 : BLE_ATT_ERR_INSUFFICIENT_RES;
-        default:
-            return BLE_ATT_ERR_UNLIKELY;
+esp_err_t update_sensor_metadata(uint8_t *data, size_t len)
+{
+    if (len > sizeof(sensor_metadata)) {
+        len = sizeof(sensor_metadata);
     }
-}
-
-static int gatt_svr_chr_access_sensor_metadata(uint16_t conn_handle, uint16_t attr_handle,
-                                               struct ble_gatt_access_ctxt *ctxt, void *arg) {
-    int rc;
-    switch (ctxt->op) {
-        case BLE_GATT_ACCESS_OP_READ_CHR:
-            rc = os_mbuf_append(ctxt->om, sensor_metadata, sizeof(sensor_metadata));
-            return rc == 0 ? 0 : BLE_ATT_ERR_INSUFFICIENT_RES;
-        default:
-            return BLE_ATT_ERR_UNLIKELY;
+    memcpy(sensor_metadata, data, len);
+    
+    if (sensor_metadata_attr_handle != 0) {
+        struct os_mbuf *om = ble_hs_mbuf_from_flat(data, len);
+        if (om) {
+            ble_gatts_notify_custom(0, sensor_metadata_attr_handle, om);
+            return ESP_OK;
+        }
     }
+    return ESP_FAIL;
 }
 
 void ble_init(void) 
 {
     ESP_LOGI(TAG, "Initializing NimBLE");
 
-    // Initialize NVS
     esp_err_t ret = nvs_flash_init();
     if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
         ESP_ERROR_CHECK(nvs_flash_erase());
@@ -200,32 +257,4 @@ void host_task(void *param)
 bool is_ble_connected(void)
 {
     return ble_connected;
-}
-
-esp_err_t update_historical_data(uint8_t *data, size_t len)
-{
-    if (len > sizeof(historical_data)) {
-        len = sizeof(historical_data);
-    }
-    memcpy(historical_data, data, len);
-    
-    if (historical_data_attr_handle != 0) {
-        ble_gatts_chr_updated(historical_data_attr_handle);
-        return ESP_OK;
-    }
-    return ESP_FAIL;
-}
-
-esp_err_t update_sensor_metadata(uint8_t *data, size_t len)
-{
-    if (len > sizeof(sensor_metadata)) {
-        len = sizeof(sensor_metadata);
-    }
-    memcpy(sensor_metadata, data, len);
-    
-    if (sensor_metadata_attr_handle != 0) {
-        ble_gatts_chr_updated(sensor_metadata_attr_handle);
-        return ESP_OK;
-    }
-    return ESP_FAIL;
 }
