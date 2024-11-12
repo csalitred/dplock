@@ -15,7 +15,7 @@
 #include "nvs_flash.h"
 #include "nvs_manager.h"
 #include "esp_bt.h"
-#include "bpw21r_driver.h"
+// #include "bpw21r_driver.h"
 
 static const char* TAG = "MAIN";
 
@@ -50,6 +50,7 @@ void app_main(void)
 
     while (1) {
         if (current_state != BREACH) {
+            /*
             ret = accelerometer_read_data(&inputs.accel_data);
             if (ret == ESP_OK) {
                 ESP_LOGI(TAG, "Accelerometer data - X: %d, Y: %d, Z: %d, x, y, z,", 
@@ -60,6 +61,7 @@ void app_main(void)
                 ESP_LOGE
                 (TAG, "Failed to read accelerometer data: %s", esp_err_to_name(ret));
             } 
+            */
 
             button_read(&inputs.button_state);
             if (inputs.button_state.state_changed) {
@@ -70,13 +72,13 @@ void app_main(void)
                 }
             }
 
-            if (photodiode_read(&light_value) == ESP_OK) {
-                ESP_LOGI(TAG, "Light value %d", light_value);
-            }
+            // if (photodiode_read(&light_value) == ESP_OK) {
+              //  ESP_LOGI(TAG, "Light value %d", light_value);
+            //}
 
-            if (is_light_detected()) {
-                ESP_LOGI(TAG, "Light is Detected");
-            }
+            //if (is_light_detected()) {
+               // ESP_LOGI(TAG, "Light is Detected");
+            //}
 
             if (is_ble_connected()) {
                 ESP_LOGI(TAG, "BLE is connected");
@@ -115,15 +117,15 @@ void init(void)
     // ESP_ERROR_CHECK(photodiode_init()); 
 
     // Initialize accelerometer
-    esp_err_t ret = accelerometer_init();
-    if (ret != ESP_OK) {
-        ESP_LOGE(TAG, "Failed to initialize accelerometer: %s", esp_err_to_name(ret));
-        return;
-    }
+    //esp_err_t ret = accelerometer_init();
+    //if (ret != ESP_OK) {
+        //ESP_LOGE(TAG, "Failed to initialize accelerometer: %s", esp_err_to_name(ret));
+        //return;
+    //}
 
     ESP_LOGI(TAG, "Accelerometer initialized successfully");
 
-    ret = nvs_manager_init();
+    esp_err_t ret = nvs_manager_init();
     if (ret != ESP_OK) {
         ESP_LOGE(TAG, "Failed to initialize NVS: %s", esp_err_to_name(ret));
         return;
@@ -136,9 +138,24 @@ void init(void)
         .container_id = "CONT123"
     };
 
-    ESP_ERROR_CHECK(nvs_manager_start_trip(&trip_info));
+    ret = nvs_manager_start_trip(&trip_info);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to store trip info: %s", esp_err_to_name(ret));
+    }
+    ESP_LOGI(TAG, "Trip info stored successfully");
 
-    ESP_LOGI(TAG, "Peripheral initialization complete");
+    trip_info_t retrieved_info;
+    ret = nvs_manager_get_trip_info(&retrieved_info);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to retrieve trip info: %s", esp_err_to_name(ret));
+        return;
+    }
+    ESP_LOGI(TAG, "Retrieved trip info - Origin: %s, Destination: %s, Container: %s", 
+             retrieved_info.origin, retrieved_info.destination, retrieved_info.container_id);
+
+    ESP_LOGI(TAG, "Retrieved trip info - Origin: %s, Destination: %s, Container: %s", 
+             retrieved_info.origin, retrieved_info.destination, retrieved_info.container_id);
+    
 }
 
 state_t run_idle_state(inputs_t* inputs)
@@ -155,18 +172,21 @@ state_t run_idle_state(inputs_t* inputs)
         return IDLE;
     }
 
-    if (inputs->button_state.is_door_opened && !is_ble_connected() && !door_unlock) {  // removed is_light_detected due to issues with photodiode
-        first_breach = true;
-        return BREACH;  
-    }
+    //if (inputs->button_state.is_door_opened && !is_ble_connected() && !door_unlock) {  // removed is_light_detected due to issues with photodiode
+      //  first_breach = true;
+        //return BREACH;  
+    //}
     return IDLE;
 }
 
 state_t run_authorized_access_state(inputs_t* inputs)
 {
-    ESP_LOGI(TAG, "Entering AUTHORIZED_ACCESS state");
+    ESP_LOGI(TAG, "In AUTHORIZED_ACCESS state");
+    ESP_LOGI(TAG, "Door unlock flag: %d", door_unlock);
+    ESP_LOGI(TAG, "BLE connected: %d", is_ble_connected());
 
     if (!is_ble_connected()) {
+        ESP_LOGI(TAG, "BLE disconnected, returning to IDLE");
         return IDLE;
     }
 
@@ -174,6 +194,7 @@ state_t run_authorized_access_state(inputs_t* inputs)
         ESP_LOGI(TAG, "Processing door unlock command");
         servo_unlock();
         door_unlock = false;
+        ESP_LOGI(TAG, "Door unlock processed");
 
         if (inputs->button_state.is_door_opened) {
             nvs_manager_log_event(EVENT_AUTHORIZED_ACCESS);
@@ -188,9 +209,14 @@ state_t run_breached_state(inputs_t* inputs)
 {
     if (first_breach) {
     ESP_LOGI(TAG, "CONTAINER BREACH!!!!");
-    nvs_manager_log_event(EVENT_BREACH);
+    esp_err_t ret = nvs_manager_log_event(EVENT_BREACH);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to log breach event: %s", esp_err_to_name(ret));
+    } else {
+        ESP_LOGI(TAG, "Breach event logged succesfully");
+    }
     first_breach = false;
     }
     ESP_LOGI(TAG, "Container remains in breached state");
-    return BREACH; // This line will never be reached
+    return BREACH; 
 }
