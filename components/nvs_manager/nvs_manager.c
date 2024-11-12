@@ -1,4 +1,5 @@
 #include "nvs_manager.h"
+#include <time.h>
 
 static const char* TAG = "NVS_MANAGER";
 static const char* NVS_NAMESPACE = "storage";
@@ -21,6 +22,9 @@ esp_err_t nvs_manager_init(void)
     if (ret != ESP_OK) {
         ESP_LOGE(TAG, "Error (%s) opening NVS handle!", esp_err_to_name(ret));
     }
+
+    init_rtc();
+
     return ret;
 }
 
@@ -83,6 +87,7 @@ esp_err_t nvs_manager_log_event(event_type_t type)
     event_record_t event;
     event.type = type;
     event.tick_count = xTaskGetTickCount() * portTICK_PERIOD_MS;
+    gettimeofday(&event.timestamp, NULL);
     
     char key[16];
     snprintf(key, sizeof(key), EVENT_KEY_PREFIX "%lu", (unsigned long)count);
@@ -98,8 +103,24 @@ esp_err_t nvs_manager_log_event(event_type_t type)
     if (ret != ESP_OK) {
         return ret;
     }
+
+    struct tm timeinfo;
+    time_t now = event.timestamp.tv_sec;
+    localtime_r(&now, &timeinfo);
+    char time_str[64];
+    strftime(time_str, sizeof(time_str), "%Y-%m-%d %H:%M:%S", &timeinfo);
+
+    const char* event_type_str;
+    switch(type) {
+        case EVENT_BREACH: event_type_str = "BREACH"; break;
+        case EVENT_AUTHORIZED_ACCESS: event_type_str = "AUTH_ACCESS"; break;
+        case EVENT_POTENTIAL_DROP: event_type_str = "POT_DROP"; break;
+        case EVENT_TRIP_START: event_type_str = "TRIP_START"; break;
+        default: event_type_str = "UNKNOWN"; break;
+    }
+
     
-    ESP_LOGI(TAG, "Event logged - Type: %d, Tick: %lu", type, event.tick_count);
+    ESP_LOGI(TAG, "Event logged - Type: %s, Time: %s", event_type_str, time_str);
     
     return nvs_commit(my_nvs_handle);
 }
@@ -139,4 +160,23 @@ esp_err_t nvs_manager_erase_all(void)
         return ret;
     }
     return nvs_commit(my_nvs_handle);
+}
+
+void init_rtc(void)
+{
+    struct tm time = {
+        .tm_year = 2024 - 1900,
+        .tm_mon = 10,
+        .tm_mday = 12,
+        .tm_hour = 12,
+        .tm_min = 0,
+        .tm_sec = 0
+    };
+    struct timeval tv = {
+        .tv_sec = mktime(&time),
+        .tv_usec = 0
+    };
+    settimeofday(&tv, NULL);
+
+    ESP_LOGI(TAG, "RTC initialized with build time");
 }

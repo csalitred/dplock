@@ -9,6 +9,7 @@
 #include "esp_log.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include <sys/time.h>
 
 #define MAX_STRING_LENGTH 64
 #define MAX_EVENTS 50
@@ -31,6 +32,7 @@ typedef struct {
 typedef struct {
     event_type_t type;
     uint32_t tick_count;
+    struct timeval timestamp;
 } event_record_t;
 
 esp_err_t nvs_manager_init(void);
@@ -39,5 +41,6 @@ esp_err_t nvs_manager_get_trip_info(trip_info_t* trip_info);
 esp_err_t nvs_manager_log_event(event_type_t type);
 esp_err_t nvs_manager_get_all_events(event_record_t* events, uint32_t* count);
 esp_err_t nvs_manager_erase_all(void);
+void init_rtc(void);
 
 #endif // NVS_MANAGER_H
