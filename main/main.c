@@ -15,7 +15,7 @@
 #include "nvs_flash.h"
 #include "nvs_manager.h"
 #include "esp_bt.h"
-// #include "bpw21r_driver.h"
+#include "bpw21r_driver.h"
 
 static const char* TAG = "MAIN";
 
@@ -50,7 +50,6 @@ void app_main(void)
 
     while (1) {
         if (current_state != BREACH) {
-            /*
             ret = accelerometer_read_data(&inputs.accel_data);
             if (ret == ESP_OK) {
                 ESP_LOGI(TAG, "Accelerometer data - X: %d, Y: %d, Z: %d, x, y, z,", 
@@ -61,7 +60,6 @@ void app_main(void)
                 ESP_LOGE
                 (TAG, "Failed to read accelerometer data: %s", esp_err_to_name(ret));
             } 
-            */
 
             button_read(&inputs.button_state);
             if (inputs.button_state.state_changed) {
@@ -72,13 +70,13 @@ void app_main(void)
                 }
             }
 
-            // if (photodiode_read(&light_value) == ESP_OK) {
-              //  ESP_LOGI(TAG, "Light value %d", light_value);
-            //}
+            if (photodiode_read(&light_value) == ESP_OK) {
+                ESP_LOGI(TAG, "Light value %d", light_value);
+            }
 
-            //if (is_light_detected()) {
-               // ESP_LOGI(TAG, "Light is Detected");
-            //}
+            if (is_light_detected()) {
+                ESP_LOGI(TAG, "Light is Detected");
+            }
 
             if (is_ble_connected()) {
                 ESP_LOGI(TAG, "BLE is connected");
@@ -114,14 +112,14 @@ void init(void)
     button_init();
     servo_init();
     ble_init();
-    // ESP_ERROR_CHECK(photodiode_init()); 
+    ESP_ERROR_CHECK(photodiode_init()); 
 
-    // Initialize accelerometer
-    //esp_err_t ret = accelerometer_init();
-    //if (ret != ESP_OK) {
-        //ESP_LOGE(TAG, "Failed to initialize accelerometer: %s", esp_err_to_name(ret));
-        //return;
-    //}
+    //Initialize accelerometer
+    esp_err_t ret = accelerometer_init();
+    if (ret != ESP_OK) {
+      ESP_LOGE(TAG, "Failed to initialize accelerometer: %s", esp_err_to_name(ret));
+    return;
+    }
 
     ESP_LOGI(TAG, "Accelerometer initialized successfully");
 
@@ -172,10 +170,10 @@ state_t run_idle_state(inputs_t* inputs)
         return IDLE;
     }
 
-    //if (inputs->button_state.is_door_opened && !is_ble_connected() && !door_unlock) {  // removed is_light_detected due to issues with photodiode
-      //  first_breach = true;
-        //return BREACH;  
-    //}
+    if (inputs->button_state.is_door_opened && !is_ble_connected() && !door_unlock) {  // removed is_light_detected due to issues with photodiode
+        first_breach = true;
+        return BREACH;  
+    }
     return IDLE;
 }
 

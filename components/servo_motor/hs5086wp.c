@@ -9,6 +9,7 @@
 
 static const char *TAG = "SERVO_MOTOR";
 static mcpwm_cmpr_handle_t comparator = NULL;
+static uint8_t motor_shift = 90;
 
 static inline uint32_t angle_to_compare(int angle) 
 {
@@ -71,7 +72,7 @@ void servo_rotate(void)
        // ESP_LOGE(TAG, "Invalid angle: %d. Angle should be between %d and %d degrees.", angle, SERVO_MIN_DEGREE, SERVO_MAX_DEGREE); 
         return;
     }
-    while (angle >= SERVO_MIN_DEGREE) {
+    while (angle >= 50) {
         ESP_LOGI(TAG, "Rotating servo to angle: %d degress", angle);
         ESP_ERROR_CHECK(mcpwm_comparator_set_compare_value(comparator, angle_to_compare(angle)));
         vTaskDelay(pdMS_TO_TICKS(20));
@@ -82,7 +83,7 @@ void servo_rotate(void)
 void servo_reset(void)
 {
     int step = 5;
-    int angle = SERVO_MIN_DEGREE;
+    int angle = 50;
     while (angle <= SERVO_MAX_DEGREE) {
         if (angle > SERVO_MAX_DEGREE || angle < SERVO_MIN_DEGREE) {
        // ESP_LOGE(TAG, "Invalid angle: %d. Angle should be between %d and %d degrees.", angle, SERVO_MIN_DEGREE, SERVO_MAX_DEGREE); 
