@@ -57,7 +57,9 @@
         "string": "c",
         "string_view": "c",
         "span": "c",
-        "math.h": "c"
+        "math.h": "c",
+        "nvs_manager.h": "c",
+        "ble_manager.h": "c"
     },
     "C_Cpp.default.includePath": [
         "${workspaceFolder}/**",

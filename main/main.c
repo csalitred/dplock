@@ -19,24 +19,24 @@
 
 static const char* TAG = "MAIN";
 
-typedef enum {IDLE, AUTHORIZED_ACCESS, DROP, BREACH, NUM_STATES} state_t;
+typedef enum {IDLE, AUTHORIZED_ACCESS, BREACH, NUM_STATES} state_t;
 
 typedef struct {
-    bool door_unlock;
     accel_data_t accel_data;
     button_input_t button_state;
 } inputs_t;
 
 extern volatile bool interrupt_occurred;
+bool first_breach = false;
+volatile bool door_unlock = false;
 
 state_t run_idle_state(inputs_t*);
 state_t run_authorized_access_state(inputs_t*);
-state_t run_dropped_state(inputs_t*);
 state_t run_breached_state(inputs_t*);
 
 void init(void);
 
-state_t (*state_table[NUM_STATES])(inputs_t*) = {run_idle_state, run_authorized_access_state, run_dropped_state, run_breached_state};
+state_t (*state_table[NUM_STATES])(inputs_t*) = {run_idle_state, run_authorized_access_state, run_breached_state};
 
 void app_main(void)
 {
@@ -92,9 +92,6 @@ void app_main(void)
             case AUTHORIZED_ACCESS:
                 next_state = run_authorized_access_state(&inputs);
                 break;
-            case DROP:
-                next_state = run_dropped_state(&inputs);
-                break;
             case BREACH:
                 next_state = run_breached_state(&inputs);
                 break;
@@ -115,24 +112,48 @@ void init(void)
     button_init();
     servo_init();
     ble_init();
-    ESP_ERROR_CHECK(photodiode_init());
+    ESP_ERROR_CHECK(photodiode_init()); 
 
-    // Initialize accelerometer
+    //Initialize accelerometer
     esp_err_t ret = accelerometer_init();
     if (ret != ESP_OK) {
-        ESP_LOGE(TAG, "Failed to initialize accelerometer: %s", esp_err_to_name(ret));
-        return;
+      ESP_LOGE(TAG, "Failed to initialize accelerometer: %s", esp_err_to_name(ret));
+    return;
     }
 
     ESP_LOGI(TAG, "Accelerometer initialized successfully");
 
-    ret = nvs_manager_init();
+    esp_err_t ret = nvs_manager_init();
     if (ret != ESP_OK) {
         ESP_LOGE(TAG, "Failed to initialize NVS: %s", esp_err_to_name(ret));
         return;
     }
 
-    ESP_LOGI(TAG, "Peripheral initialization complete");
+    trip_info_t trip_info = {
+        .origin = "Charlotte",
+        .destination = "Texas",
+        .contents = "Apparel",
+        .container_id = "CONT123"
+    };
+
+    ret = nvs_manager_start_trip(&trip_info);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to store trip info: %s", esp_err_to_name(ret));
+    }
+    ESP_LOGI(TAG, "Trip info stored successfully");
+
+    trip_info_t retrieved_info;
+    ret = nvs_manager_get_trip_info(&retrieved_info);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to retrieve trip info: %s", esp_err_to_name(ret));
+        return;
+    }
+    ESP_LOGI(TAG, "Retrieved trip info - Origin: %s, Destination: %s, Container: %s", 
+             retrieved_info.origin, retrieved_info.destination, retrieved_info.container_id);
+
+    ESP_LOGI(TAG, "Retrieved trip info - Origin: %s, Destination: %s, Container: %s", 
+             retrieved_info.origin, retrieved_info.destination, retrieved_info.container_id);
+    
 }
 
 state_t run_idle_state(inputs_t* inputs)
@@ -141,16 +162,16 @@ state_t run_idle_state(inputs_t* inputs)
     ESP_LOGI(TAG, "In IDLE state");
     
     if (is_ble_connected()) {
-        // TODO: wait for request access to be true:
-        // if (request_from_phone){
-        // inputs->door_unlock = true;
-        // }
         return AUTHORIZED_ACCESS;
     }
+
     if (inputs->accel_data.is_dropped || inputs->accel_data.tilt_angle >= 45.0) {
-        return DROP;
+        nvs_manager_log_event(EVENT_POTENTIAL_DROP);
+        return IDLE;
     }
-    if (inputs->button_state.is_door_opened && !is_ble_connected() && is_light_detected()) {
+
+    if (inputs->button_state.is_door_opened && !is_ble_connected() && !door_unlock) {  // removed is_light_detected due to issues with photodiode
+        first_breach = true;
         return BREACH;  
     }
     return IDLE;
@@ -158,43 +179,42 @@ state_t run_idle_state(inputs_t* inputs)
 
 state_t run_authorized_access_state(inputs_t* inputs)
 {
-    ESP_LOGI(TAG, "Entering AUTHORIZED_ACCESS state");
-    // LOG DATA FOR AUTHORIZED ACCESS IN FLASH MEMORY HERE: TIME STAMP
-    // stay here until no longer BLE connection established
-    if (inputs->button_state.is_door_opened) {
-        ESP_LOGI(TAG, "DOOR IS OPEN");
-        // LOG EVENT ???
-    }
+    ESP_LOGI(TAG, "In AUTHORIZED_ACCESS state");
+    ESP_LOGI(TAG, "Door unlock flag: %d", door_unlock);
+    ESP_LOGI(TAG, "BLE connected: %d", is_ble_connected());
+
     if (!is_ble_connected()) {
+        ESP_LOGI(TAG, "BLE disconnected, returning to IDLE");
         return IDLE;
     }
-    if (inputs->door_unlock) {
-        servo_unlock();
-        inputs->door_unlock = false;
-    }
-    return AUTHORIZED_ACCESS;
-}
 
-state_t run_dropped_state(inputs_t* inputs)
-{
-    // ESP_LOGI(TAG, "Entering DROP state");
-     // Log timestamp and data of event in flash memory
-    if (inputs->accel_data.is_dropped) {
-    ESP_LOGI(TAG, "CONTAINER IMPACTED!");
+    if (door_unlock) {
+        ESP_LOGI(TAG, "Processing door unlock command");
+        servo_unlock();
+        door_unlock = false;
+        ESP_LOGI(TAG, "Door unlock processed");
+
+        if (inputs->button_state.is_door_opened) {
+            nvs_manager_log_event(EVENT_AUTHORIZED_ACCESS);
+            ESP_LOGI(TAG, "Authorized access event logged");
+        }
     }
-    if(inputs->accel_data.tilt_angle >= 45) {
-        ESP_LOGI(TAG, "CONTAINER TILT PASSED 45 degrees!");
-    }
-    return IDLE;
+
+    return AUTHORIZED_ACCESS;
 }
 
 state_t run_breached_state(inputs_t* inputs)
 {
-    static bool first_breach = true;
     if (first_breach) {
     ESP_LOGI(TAG, "CONTAINER BREACH!!!!");
-    // nvs_manager_log_event(BREACH_EVENT);
+    esp_err_t ret = nvs_manager_log_event(EVENT_BREACH);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to log breach event: %s", esp_err_to_name(ret));
+    } else {
+        ESP_LOGI(TAG, "Breach event logged succesfully");
+    }
+    first_breach = false;
     }
     ESP_LOGI(TAG, "Container remains in breached state");
-    return BREACH; // This line will never be reached
+    return BREACH; 
 }
